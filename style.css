@@ -1,0 +1,62 @@
+:root {
+    --dark: #101020;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background-color: var(--dark);
+}
+
+.canvas {
+    width: 700px;
+    height: 700px;
+    background-color: #e6e6e6;
+    position: relative;
+    border-radius: 5px;
+}
+
+.player {
+    width: 100px;
+    height: 100px;
+    /* border-radius: 50%; */
+    background-color: yellow;
+    position: absolute;
+    top: 600px;
+    background: url('./img/space-ship.png');
+    background-size:cover ;
+}
+
+.pause {
+    animation-play-state: paused;
+}
+
+.bullet{
+    width: 10px;
+    height: 15px;
+    margin: 40px;
+    border-radius: 50%;
+    background-color: rgb(0, 0, 0);
+    position: absolute;
+}
+.enemies{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.point {
+    width: 35px;
+    height: 35px;
+    margin: 2px;
+    /* border-radius: 100%; */
+    /* background-color: gray; */
+    /* position: absolute; */
+    background: url(./img/enemy.png);
+    display: flex;
+    flex-wrap: wrap;
+}
