@@ -15,7 +15,7 @@ body {
 
 .canvas {
     width: 600px;
-    height: 700px;
+    height: 680px;
     background-color: #e6e6e6;
     position: relative;
     border-radius: 5px;
@@ -27,7 +27,7 @@ body {
     /* border-radius: 50%; */
     background-color: yellow;
     position: absolute;
-    top: 600px;
+    top: 580px;
     background: url('./img/space-ship.png');
     background-size:cover ;
 }
@@ -60,4 +60,11 @@ body {
     background: url(./img/enemy.png);
     display: flex;
     flex-wrap: wrap;
+}
+.over {
+    margin-top: 50%;
+    color: #101020;
+    font-size: 50px;
+    justify-content: center;
+    text-align: center;
 }

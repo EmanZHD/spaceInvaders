@@ -44,21 +44,40 @@ document.addEventListener('keydown', e => {
     }
 })
 
+const gameOver = () => {
+    canvas.innerHTML = ''
+    const done = document.createElement('div')
+    done.classList.add('over')
+    done.innerHTML = 'GAME OVER'
+    canvas.append(done)
+}
+
 let moveX = 0
 let moveY = 0
+let reverse = false
 const annimateInvaders = () => {
     const enemyRect = invaders.getBoundingClientRect()
     const canvasRect = canvas.getBoundingClientRect()
     console.log(`-> canvasREct `, canvasRect, '\n-> enemyREct', enemyRect)
+    console.log(`${canvasRect.bottom} , eneny ${enemyRect.bottom}`)
+    console.log('div', invaders)
     switch (true) {
-        case (canvasRect.right > enemyRect.right):
-            moveX += 1
+        case (canvasRect.bottom <= enemyRect.bottom):
+            gameOver()
+            return
+        case (!reverse && canvasRect.right > enemyRect.right):
+                moveX += 2
             break
-        case (canvasRect.right == enemyRect.right):
-            moveY += 1
+        case (!reverse && canvasRect.right == enemyRect.right):
+            reverse = true
+            moveY += 23
             break
-        case (canvasRect.left < enemyRect.left):
-            moveX -= 1
+        case (reverse && canvasRect.left < enemyRect.left):
+            moveX -= 2
+            break
+        case (reverse && canvasRect.left == enemyRect.left):
+                reverse = false
+                moveY += 23
             break
     }
     // moveX -= 5
