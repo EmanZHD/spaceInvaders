@@ -62,9 +62,26 @@ body {
     flex-wrap: wrap;
 }
 .over {
-    margin-top: 50%;
+    display: flex; 
+    flex-direction: column;
+    margin-top: 40%;
     color: #101020;
     font-size: 50px;
-    justify-content: center;
-    text-align: center;
+    /* justify-content: center; */
+    /* text-align: center; */
+    align-items: center;
+}
+.over button{
+    background-color: black;
+    color: aliceblue;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-weight: bolder;
+    border: 1px solid   black;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.over button:hover{
+    background-color: aqua;
+    color:black;
 }

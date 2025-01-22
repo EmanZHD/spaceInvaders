@@ -43,13 +43,28 @@ document.addEventListener('keydown', e => {
         createBullet(playerX)
     }
 })
-
+let scores = 0
 const gameOver = () => {
     canvas.innerHTML = ''
     const done = document.createElement('div')
+    const restart = document.createElement('button')
+    const game = document.createElement('span')
+    const score = document.createElement('span')
+    game.classList.add('final')
+    score.classList.add('score')
     done.classList.add('over')
-    done.innerHTML = 'GAME OVER'
+    game.innerHTML = 'GAME OVER'
+    restart.value = 'restart'
+    restart.textContent = 'Restart'
+    score.innerHTML = `score: ${scores}`
+    done.append(game)
+    done.append(score)
+    done.append(restart)
     canvas.append(done)
+    restart.addEventListener('click', (event)=>{
+        console.log(event)
+        canvas.innerHTML = ''
+    })
 }
 
 let moveX = 0
@@ -58,9 +73,9 @@ let reverse = false
 const annimateInvaders = () => {
     const enemyRect = invaders.getBoundingClientRect()
     const canvasRect = canvas.getBoundingClientRect()
-    console.log(`-> canvasREct `, canvasRect, '\n-> enemyREct', enemyRect)
-    console.log(`${canvasRect.bottom} , eneny ${enemyRect.bottom}`)
-    console.log('div', invaders)
+    // console.log(`-> canvasREct `, canvasRect, '\n-> enemyREct', enemyRect)
+    // console.log(`${canvasRect.bottom} , eneny ${enemyRect.bottom}`)
+    // console.log('div', invaders)
     switch (true) {
         case (canvasRect.bottom <= enemyRect.bottom):
             gameOver()
@@ -83,8 +98,18 @@ const annimateInvaders = () => {
     // moveX -= 5
     invaders.style.transform = `translate(${moveX}px,${moveY}px)`
     requestAnimationFrame(annimateInvaders)
-}
+    eliminateInvader()
 
+}
+const eliminateInvader = () => {
+    const divs = document.querySelectorAll('.invader')
+console.log('player ',player.getBoundingClientRect())
+    divs.forEach( elem => {
+        console.log('------------------------------>',elem.getBoundingClientRect())
+    })
+//    console.log(`player ${player} \n invqder $
+// {invader}`)
+}
 const points = () => {
     let i = 0
     while (i < 33) {
@@ -96,6 +121,7 @@ const points = () => {
     }
     annimateInvaders()
 }
+
 
 points()
 
@@ -124,7 +150,7 @@ let bulletYMove = playerInitY
 let canvasREC = canvas.getBoundingClientRect()
 
 function moveBullet(bullet) {
-    console.log(canvasREC)
+    // console.log(canvasREC)
     let bTop = parseInt(bullet.style.top)
     bTop -= moveAmount
     bullet.style.top = `${bTop}px`
