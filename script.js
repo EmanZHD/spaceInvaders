@@ -3,20 +3,10 @@
 //     0, 0, 0, 0, 0, 0
 // ]
 
-
 const canvas = document.querySelector('.canvas')
 const player = document.querySelector('.player')
-const enemies = document.querySelector('.enemies')
-const points = () => {
-    let i = 0
-    while (i<51){
-        const point = document.createElement('div')
-        point.classList.add('point')
-        enemies.append(point)
-        // canvas.append(point)
-        i++
-    }
-}
+const invaders = document.querySelector('.invaders')
+
 let moveVer = player.offsetTop
 
 let moveAmount = 10
@@ -51,13 +41,47 @@ document.addEventListener('keydown', e => {
     //space
     if (e.key === ' ' || e.key === 'Enter') {
         createBullet(playerX)
-    } 
+    }
 })
+
+let moveX = 0
+let moveY = 0
+const annimateInvaders = () => {
+    const enemyRect = invaders.getBoundingClientRect()
+    const canvasRect = canvas.getBoundingClientRect()
+    console.log(`-> canvasREct `, canvasRect, '\n-> enemyREct', enemyRect)
+    switch (true) {
+        case (canvasRect.right > enemyRect.right):
+            moveX += 1
+            break
+        case (canvasRect.right == enemyRect.right):
+            moveY += 1
+            break
+        case (canvasRect.left < enemyRect.left):
+            moveX -= 1
+            break
+    }
+    // moveX -= 5
+    invaders.style.transform = `translate(${moveX}px,${moveY}px)`
+    requestAnimationFrame(annimateInvaders)
+}
+
+const points = () => {
+    let i = 0
+    while (i < 33) {
+        const invader = document.createElement('div')
+        invader.classList.add('invader')
+        invaders.append(invader)
+        // canvas.append(invader)
+        i++
+    }
+    annimateInvaders()
+}
 
 points()
 
 function test() {
-    
+
     const canvasWidth = canvas.clientWidth
     const playerWidth = player.clientWidth
 
@@ -85,8 +109,6 @@ function moveBullet(bullet) {
     let bTop = parseInt(bullet.style.top)
     bTop -= moveAmount
     bullet.style.top = `${bTop}px`
-
-
     if (bTop < canvasREC.top) {
         bullet.remove()
         ///remove bullet
@@ -101,7 +123,7 @@ function createBullet(playerX) {
     bullet.classList.add('bullet')
     bullet.style.left = `${playerX}px`
     bullet.style.top = `${playerInitY}px`
-    bullet.style.transform = `translate(50%)`
+    bullet.style.transform = `translate(50 %)`
 
     canvas.appendChild(bullet)
     bullets.push(bullet)
