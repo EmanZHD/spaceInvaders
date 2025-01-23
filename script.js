@@ -6,6 +6,7 @@
 const canvas = document.querySelector('.canvas')
 const player = document.querySelector('.player')
 const invaders = document.querySelector('.invaders')
+const gameInfo = document.querySelector('.game-info')
 
 let scores = 0
 let moveVer = player.offsetTop
@@ -72,7 +73,7 @@ const gameOver = () => {
     done.append(restart)
     canvas.append(done)
     restart.addEventListener('click', () => {
-        canvas.innerHTML = ''
+        location.reload()
     })
 }
 
@@ -107,28 +108,66 @@ const annimateInvaders = () => {
 
 }
 
-const eliminateInvader = (bullet) => {
-    const enemies = document.querySelector('.invaders')
-    let bombTop = parseInt(bullet.style.top)
-    let invaderBottom = enemies.getBoundingClientRect().bottom
-    console.log('trackBOMB=>', bombTop, 'trackINvader =>',invaderBottom)
-    const enemyRect = enemies ? enemies.getBoundingClientRect() : ' '
-    console.log('enemy----->',enemyRect)
-    if (enemies && bombTop<invaderBottom){
-        enemies.remove()
+// const eliminateInvader = (bullet) => {
+//     const enemies = document.querySelector('.invaders')
+//     let bombTop = parseInt(bullet.style.top)
+//     let invaderBottom = enemies.getBoundingClientRect().bottom
+//     console.log('trackBOMB=>', bombTop, 'trackINvader =>',invaderBottom)
+//     const enemyRect = enemies ? enemies.getBoundingClientRect() : ' '
+//     console.log('enemy----->',enemyRect)
+//     if (enemies && bombTop<invaderBottom){
+//         enemies.remove()
+//     }
+// }
+
+const checkCollision = (bullet, invader) => {
+    const bulletRect = bullet.getBoundingClientRect()
+    const invaderRect = invader.getBoundingClientRect()
+    const playerRect = player.getBoundingClientRect()
+    if (
+        invaderRect.bottom >= playerRect.top &&
+        invaderRect.top <= playerRect.bottom &&
+        invaderRect.right >= playerRect.left &&
+        invaderRect.left <= playerRect.right
+    ) {
+        gameOver()
+        return true
     }
-    // if (bullet.length !== 0) {
-    //     bullet.forEach(elem => {
-    //         const bomb = elem.getBoundingClientRect()
-    //         console.log('bomb----->',bomb)
-    //         if (enemies && bomb.top> enemyRect.bottom){
-    //             enemies.remove()
-    //             // gameOver()
-    //             // return
-    //         }
-    //     })
-    // }
+    return !(
+        bulletRect.bottom < invaderRect.top ||
+        bulletRect.top > invaderRect.bottom ||
+        bulletRect.right < invaderRect.left ||
+        bulletRect.left > invaderRect.right
+    )
 }
+
+const updateScoreDisplay = () => {
+    const scoreElement = gameInfo.querySelector('.score')
+    if (scoreElement) {
+        scoreElement.textContent = `Score: ${scores}`
+    }
+}
+const eliminateInvader = (bullet) => {
+    const invadersList = document.querySelectorAll('.invader')
+    invadersList.forEach(invader => {
+        if (checkCollision(bullet, invader)) {
+            invader.remove()
+            scores += 10
+            console.log('Score:', scores)
+            bullet.remove()
+            bullets = bullets.filter(b => b !== bullet)
+            updateScoreDisplay()
+        }
+    })
+}
+
+// const info = () => {
+//     const metaData = document.querySelector('.metaData')
+//     const score = document.createElement('span')
+//     score.classList.add('score')
+//     score.innerHTML = `score: ${scores}`
+//     metaData.append(score)
+// }
 
 const points = () => {
     let i = 0
@@ -143,6 +182,7 @@ const points = () => {
 }
 
 points()
+// info()
 
 function test() {
     const canvasWidth = canvas.clientWidth
@@ -187,6 +227,7 @@ function createBullet(playerX) {
     bullets.push(bullet)
     moveBullet(bullet)
 }
+
 
 
 requestAnimationFrame(test)

@@ -6,7 +6,10 @@ body {
     height: 100vh;
     margin: 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    /* flex-wrap: wrap; */
     align-items: center;
     justify-content: center;
     color: #fff;
@@ -84,4 +87,18 @@ body {
 .over button:hover{
     background-color: aqua;
     color:black;
+}
+.game-info{
+    margin-bottom: 10px;
+    width: 550px;
+    height: 50px;
+    background-color: #e6e6e6;
+    border-radius: 5px 5px 0 0; /* Rounded corners on top */
+    display: flex;
+    justify-content: space-between; /* Space out score and lives */
+    align-items: center; /* Center text vertically */
+    padding: 0 20px; /* Add some padding */
+    color: #101020; /* Dark text color */
+    font-weight: bolder;
+    font-size: 20px; /* Larger font size */
 }
