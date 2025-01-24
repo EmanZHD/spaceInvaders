@@ -113,18 +113,18 @@ const annimateInvaders = () => {
             gameOver()
             return
         case (!reverse && canvasRect.right > enemyRect.right):
-            moveX += 2
+            moveX += 5
             break
         case (!reverse && canvasRect.right == enemyRect.right):
             reverse = true
-            moveY += 23
+            moveY += 53
             break
         case (reverse && canvasRect.left < enemyRect.left):
-            moveX -= 2
+            moveX -= 5
             break
         case (reverse && canvasRect.left == enemyRect.left):
             reverse = false
-            moveY += 23
+            moveY += 53
             break
     }
     // moveX -= 5
@@ -132,7 +132,7 @@ const annimateInvaders = () => {
     requestAnimationFrame(annimateInvaders)
 
 }
-
+annimateInvaders()
 const checkCollision = (bullet, invader) => {
     const bulletRect = bullet.getBoundingClientRect()
     const invaderRect = invader.getBoundingClientRect()
@@ -196,7 +196,7 @@ const createINvaders = () => {
     pointsMap.forEach((enemy, index) => {
         const enemyPOs = document.createElement('div')
         let x = (index % 6) * 60
-        let y = Math.floor((index / 6) * 60)
+        let y = Math.floor((index / 6)) * 60
         switch (enemy) {
             case (0):
                 enemyPOs.classList.add('invader_Pink')
@@ -208,6 +208,7 @@ const createINvaders = () => {
                 enemyPOs.classList.add('invader_Blue')
                 break
         }
+        enemyPOs.style.position = 'absolute';
         enemyPOs.style.left = `${x}px`
         enemyPOs.style.top = `${y}px`
         invaders.append(enemyPOs)

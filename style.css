@@ -5,6 +5,21 @@
     --green: #4bd32a;
 }
 
+.invader_Pink {
+    --_1stImg: url('./img/pinkAlien0.png');
+    --_2ndImg: url('./img/pinkAlien1.png');
+}
+
+.invader_Blue {
+    --_1stImg: url('./img/blueAlien0.png');
+    --_2ndImg: url('./img/blueAlien1.png');
+}
+
+.invader_White {
+    --_1stImg: url('./img/alien0.png');
+    --_2ndImg: url('./img/alien1.png');
+}
+
 body {
     font-family: "Galindo", serif;
     font-weight: bolder;
@@ -60,64 +75,25 @@ body {
     justify-content: center;
 }
 
-.invader {
-    width: 50px;
-    height: 35px;
-    margin: 5px;
-    /* border-radius: 100%; */
-    /* background-color: gray; */
-    /* position: absolute; */
-    /* background: url(./img/alien1.png); */
-    /* display: flex;
-    flex-wrap: wrap; */
-    display: absolute;
-    animation: switchInvader 1s 0s infinite;
-}
-.invader_Pink {
-    width: 50px;
-    height: 35px;
-    margin: 5px;
-    display: inline-block;
-    animation: switchInvaderPink 1s 0s infinite;
-}
-.invader_Blue {
-    width: 50px;
-    height: 35px;
-    margin: 5px;
-    display: inline-block;
-    animation: switchInvaderBlue 1s 0s infinite;
-}
+.invader_Pink,
+.invader_Blue,
 .invader_White {
     width: 50px;
     height: 35px;
     margin: 5px;
     display: inline-block;
-    animation: switchInvaderWhite 1s 0s infinite;
+    animation: switchInvader 1s 0s infinite;
 }
-@keyframes switchInvaderPink {
+
+@keyframes switchInvader {
     0% {
-        background: url('./img/pinkAlien0.png') no-repeat center / cover;
+        background: var(--_1stImg) no-repeat center / cover;
     }
     100% {
-        background: url('./img/pinkAlien1.png') no-repeat center / cover;
+        background: var(--_2ndImg) no-repeat center / cover;
     }
 }
-@keyframes switchInvaderBlue {
-    0% {
-        background: url('./img/blueAlien0.png') no-repeat center / cover;
-    }
-    100% {
-        background: url('./img/blueAlien1.png') no-repeat center / cover;
-    }
-}
-@keyframes switchInvaderWhite {
-    0% {
-        background: url('./img/alien0.png') no-repeat center / cover;
-    }
-    100% {
-        background: url('./img/alien1.png') no-repeat center / cover;
-    }
-}
+
 .over {
     display: flex;
     flex-direction: column;
@@ -173,3 +149,21 @@ body {
     height: 19px;
     background: url('./img/lives.png');
 } */
+
+.pauseBtn, .restartBtn {
+    font-family: "Galindo", serif;
+    font-weight: bolder;
+    font-size: 16px;
+    background-color: black;
+    color: var(--green);
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 2px solid var(--green);
+    border-radius: 5px;
+    /* margin-left: 20px; */
+}
+
+.pauseBtn:hover, .restartBtn:hover {
+    background-color: var(--green);
+    color: black;
+}
