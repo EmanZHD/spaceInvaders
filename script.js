@@ -7,6 +7,7 @@ const canvas = document.querySelector('.canvas')
 const player = document.querySelector('.player')
 const invaders = document.querySelector('.invaders')
 const gameInfo = document.querySelector('.game-info')
+let canSHoot = true
 
 let invaderAmount = 24
 let scores = 0
@@ -51,11 +52,22 @@ document.addEventListener('keydown', e => {
     }
     const playerX = getPlayerXRelativeToCanvas(player, canvas)
     //space
-    if (e.key === ' ' || e.key === 'Enter') {
+    if (canSHoot && (e.key === ' ' || e.key === 'Enter')) {
         createBullet(playerX)
     }
 })
 
+const timer = () => {
+    const time = document.querySelector('.timer')
+    let nbr = +(time.textContent.split(':')[1])
+    console.log('timer', time.textContent, nbr)
+    if (nbr !== 0) {
+        time.textContent = nbr--
+    }
+    time.innerHTML = nbr
+}
+
+setInterval(timer(), 1000)
 const gameOver = () => {
     canvas.innerHTML = ''
     const done = document.createElement('div')
@@ -103,49 +115,45 @@ const gameWin = () => {
     }
 }
 
+const roundNum = (nbr) => {
+    return Math.floor(nbr / 100) * 100
+}
 
 const annimateInvaders = () => {
     const enemyRect = invaders.getBoundingClientRect()
     const canvasRect = canvas.getBoundingClientRect()
+    // console.log('invaderDIV----------- ', enemyRect)
+    const speed = 2
+    // console.log('---> ', roundNum(player.getBoundingClientRect().top), roundNum(enemyRect.bottom))
     switch (true) {
-        case (canvasRect.bottom <= enemyRect.bottom):
-            gameOver()
+        case (roundNum(player.getBoundingClientRect().top) - 100 === roundNum(enemyRect.bottom)):
+            canSHoot = false
+            setTimeout(gameOver, 3000)
             return
         case (!reverse && canvasRect.right > enemyRect.right):
-            moveX += 5
+            moveX += speed
             break
         case (!reverse && canvasRect.right == enemyRect.right):
             reverse = true
-            moveY += 53
+            moveY += 13
             break
         case (reverse && canvasRect.left < enemyRect.left):
-            moveX -= 5
+            moveX -= speed
             break
         case (reverse && canvasRect.left == enemyRect.left):
             reverse = false
-            moveY += 53
+            moveY += 13
             break
     }
     // moveX -= 5
     invaders.style.transform = `translate(${moveX}px,${moveY}px)`
     requestAnimationFrame(annimateInvaders)
-
 }
 annimateInvaders()
 
 const checkCollision = (bullet, invader) => {
     const bulletRect = bullet.getBoundingClientRect()
     const invaderRect = invader.getBoundingClientRect()
-    const playerRect = player.getBoundingClientRect()
-    // if (
-    //     invaderRect.bottom >= playerRect.top &&
-    //     invaderRect.top <= playerRect.bottom &&
-    //     invaderRect.right >= playerRect.left &&
-    //     invaderRect.left <= playerRect.right
-    // ) {
-    //     gameOver()
-    //     return true
-    // }
     let collision = bulletRect.bottom < invaderRect.top ||
         bulletRect.top > invaderRect.bottom ||
         bulletRect.right < invaderRect.left ||
@@ -175,7 +183,7 @@ const updateScore = () => {
 }
 
 const eliminateInvader = (bullet) => {
-    gameWin()
+    setTimeout(gameWin, 3000)
     const invadersList = document.querySelectorAll('[class^="invader_"]')
     invadersList.forEach(invader => {
         if (checkCollision(bullet, invader)) {
@@ -225,14 +233,17 @@ function test() {
     const playerWidth = player.clientWidth
     //player x pos
     const playerX = getPlayerXRelativeToCanvas(player, canvas)
-    if (keys['ArrowLeft'] && playerX > 0) {
-        moveHor -= moveAmount
+    if (canSHoot) {
+        if (keys['ArrowLeft'] && playerX > 0) {
+            moveHor -= moveAmount
+        }
+        if (keys['ArrowRight'] && playerX + playerWidth < canvasWidth) {
+            moveHor += moveAmount
+        }
+        requestAnimationFrame(test)
+        player.style.transform = `translateX(${moveHor}px)`
     }
-    if (keys['ArrowRight'] && playerX + playerWidth < canvasWidth) {
-        moveHor += moveAmount
-    }
-    requestAnimationFrame(test)
-    player.style.transform = `translateX(${moveHor}px)`
+
 }
 
 

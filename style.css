@@ -70,6 +70,7 @@ body {
 }
 
 .invaders {
+    width: fit-content;
     width: 400px;
     /* display: flex;
     flex-wrap: wrap; */
