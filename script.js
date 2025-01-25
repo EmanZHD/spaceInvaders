@@ -59,15 +59,20 @@ document.addEventListener('keydown', e => {
 
 const timer = () => {
     const time = document.querySelector('.timer')
-    let nbr = +(time.textContent.split(':')[1])
-    console.log('timer', time.textContent, nbr)
-    if (nbr !== 0) {
-        time.textContent = nbr--
+    let sec = +(time.textContent.split(':')[1])
+    console.log('timer', time.textContent, sec)
+    if (sec === 0){
+        canSHoot = false
+            setTimeout(gameOver, 3000)
     }
-    time.innerHTML = nbr
+    if (sec !== 0) {
+        sec--
+    }
+    time.innerHTML = `00:${String(sec).padStart(2, '0')}`
 }
 
-setInterval(timer(), 1000)
+setInterval(timer, 1000)
+
 const gameOver = () => {
     canvas.innerHTML = ''
     const done = document.createElement('div')
@@ -146,7 +151,9 @@ const annimateInvaders = () => {
             break
     }
     // moveX -= 5
-    invaders.style.transform = `translate(${moveX}px,${moveY}px)`
+    if (canSHoot){
+        invaders.style.transform = `translate(${moveX}px,${moveY}px)`
+    }
     requestAnimationFrame(annimateInvaders)
 }
 annimateInvaders()
