@@ -39,14 +39,14 @@ function getPlayerXRelativeToCanvas(player, canvas) {
 
 document.addEventListener('keyup', e => {
     keys[e.key] = false
-    console.log('up')
+    // console.log('up')
 })
 
 document.addEventListener('keydown', e => {
-    console.log('down')
+    // console.log('down')
     keys[e.key] = true
     if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
-        console.log('pause')
+        // console.log('pause')
         pause()
     }
     const playerX = getPlayerXRelativeToCanvas(player, canvas)
@@ -79,9 +79,8 @@ const gameOver = () => {
 }
 
 const gameWin = () => {
-    console.log('win', invaderAmount)
-    console.log('------->', invaders.childNodes.length)
-    if ( invaders.childNodes.length === 0) {
+    // console.log('------->', invaders.childNodes.length)
+    if (invaders.childNodes.length === 0) {
         canvas.innerHTML = ''
         const done = document.createElement('div')
         const restart = document.createElement('button')
@@ -133,25 +132,25 @@ const annimateInvaders = () => {
 
 }
 annimateInvaders()
+
 const checkCollision = (bullet, invader) => {
     const bulletRect = bullet.getBoundingClientRect()
     const invaderRect = invader.getBoundingClientRect()
     const playerRect = player.getBoundingClientRect()
-    if (
-        invaderRect.bottom >= playerRect.top &&
-        invaderRect.top <= playerRect.bottom &&
-        invaderRect.right >= playerRect.left &&
-        invaderRect.left <= playerRect.right
-    ) {
-        gameOver()
-        return true
-    }
-    return !(
-        bulletRect.bottom < invaderRect.top ||
+    // if (
+    //     invaderRect.bottom >= playerRect.top &&
+    //     invaderRect.top <= playerRect.bottom &&
+    //     invaderRect.right >= playerRect.left &&
+    //     invaderRect.left <= playerRect.right
+    // ) {
+    //     gameOver()
+    //     return true
+    // }
+    let collision = bulletRect.bottom < invaderRect.top ||
         bulletRect.top > invaderRect.bottom ||
         bulletRect.right < invaderRect.left ||
         bulletRect.left > invaderRect.right
-    )
+    return !(collision)
 }
 
 const UpdateLives = () => {
@@ -183,20 +182,24 @@ const eliminateInvader = (bullet) => {
             invader.remove()
             invaderAmount--
             scores += 10
-            console.log('Score:', scores)
+            // console.log('Score:', scores)
             bullet.remove()
             bullets = bullets.filter(b => b !== bullet)
             updateScore()
         }
     })
 }
+
 UpdateLives()
 
 const createINvaders = () => {
+    const invadersinLine = 6
+    const X_space = 65
+    const Y_space = 60
     pointsMap.forEach((enemy, index) => {
         const enemyPOs = document.createElement('div')
-        let x = (index % 6) * 60
-        let y = Math.floor((index / 6)) * 60
+        let x = (index % invadersinLine) * X_space
+        let y = Math.floor((index / invadersinLine)) * Y_space
         switch (enemy) {
             case (0):
                 enemyPOs.classList.add('invader_Pink')
@@ -235,7 +238,6 @@ function test() {
 
 function moveBullet(bullet) {
     let bTop = parseInt(bullet.style.top)
-    console.log('bullet TOP', bTop, canvas.clientHeight)
     bTop -= moveAmount
     bullet.style.top = `${bTop}px`
     eliminateInvader(bullet)
@@ -249,15 +251,18 @@ function moveBullet(bullet) {
 }
 
 function createBullet(playerX) {
-    const bullet = document.createElement('span')
-    bullet.classList.add('bullet')
-    bullet.style.left = `${playerX}px`
-    bullet.style.top = `${playerInitY}px`
-    bullet.style.transform = `translate(50%)`
+    const ship = document.querySelector('.player')
+    if (ship) {
+        const bullet = document.createElement('span')
+        bullet.classList.add('bullet')
+        bullet.style.left = `${playerX}px`
+        bullet.style.top = `${playerInitY}px`
+        bullet.style.transform = `translate(50%)`
 
-    canvas.appendChild(bullet)
-    bullets.push(bullet)
-    if (player) { moveBullet(bullet) }
+        canvas.appendChild(bullet)
+        bullets.push(bullet)
+        moveBullet(bullet)
+    }
 }
 
 
