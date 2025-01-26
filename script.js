@@ -60,10 +60,9 @@ document.addEventListener('keydown', e => {
 const timer = () => {
     const time = document.querySelector('.timer')
     let sec = +(time.textContent.split(':')[1])
-    console.log('timer', time.textContent, sec)
-    if (sec === 0){
+    if (sec === 0) {
         canSHoot = false
-            setTimeout(gameOver, 3000)
+        setTimeout(gameOver, 3000)
     }
     if (sec !== 0) {
         sec--
@@ -151,7 +150,7 @@ const annimateInvaders = () => {
             break
     }
     // moveX -= 5
-    if (canSHoot){
+    if (canSHoot) {
         invaders.style.transform = `translate(${moveX}px,${moveY}px)`
     }
     requestAnimationFrame(annimateInvaders)
