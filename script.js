@@ -1,41 +1,42 @@
-const pointsMap = [0, 0, 0, 0, 0, 0,
-    1, 1, 1, 1, 1, 1,
-    2, 2, 2, 2, 2, 2
-]
+import {
+    getPlayerXRelativeToCanvas, roundNum,
+    checkCollision, UpdateLives, getRandomNums
+} from './utils.js'
+
+import { createINvaders } from "./invaders.js"
+
+const invaderParams = {
+    invaderAmount: 24,
+    moveX: 0,
+    moveY: 0,
+    reverse: false,
+    speedX: 2,
+    speedY: 13,
+}
+
+const finalResult = {
+    status: true,
+    fail: 'GAME OVER',
+    safe: 'You Win',
+    scores: 0,
+    finalTime: 0,
+}
 
 const canvas = document.querySelector('.canvas')
 const player = document.querySelector('.player')
 const invaders = document.querySelector('.invaders')
 const gameInfo = document.querySelector('.game-info')
+
+let keys = {}
+let bullets = []
 let canSHoot = true
-
-let invaderAmount = 24
-let scores = 0
-let moveVer = player.offsetTop
 let moveAmount = 10
-
 let playerInitX = canvas.clientWidth / 2 - player.clientWidth / 2
 let playerInitY = canvas.clientHeight - player.clientHeight - 20
-
 let moveHor = playerInitX
 
 console.log('playerInitY : ', playerInitY)
 player.style.transform = `translate(${playerInitX}px)`
-
-let keys = {}
-let moveX = 0
-let moveY = 0
-let reverse = false
-
-let bullets = []
-let bulletYMove = playerInitY
-let canvasREC = canvas.getBoundingClientRect()
-
-function getPlayerXRelativeToCanvas(player, canvas) {
-    const playerRect = player.getBoundingClientRect()
-    const canvasRect = canvas.getBoundingClientRect()
-    return playerRect.left - canvasRect.left
-}
 
 
 document.addEventListener('keyup', e => {
@@ -53,7 +54,7 @@ document.addEventListener('keydown', e => {
     const playerX = getPlayerXRelativeToCanvas(player, canvas)
     //space
     if (canSHoot && (e.key === ' ' || e.key === 'Enter')) {
-        createBullet(playerX)
+        createBullet(playerX, playerInitY, 'player')
     }
 })
 
@@ -62,140 +63,134 @@ const timer = () => {
     let sec = +(time.textContent.split(':')[1])
     if (sec === 0) {
         canSHoot = false
-        setTimeout(gameOver, 3000)
+        finalResult.status = false
+        setTimeout(gameResult, 3000)
     }
-    if (sec !== 0) {
+    if (sec !== 0 && canSHoot) {
         sec--
     }
+    finalResult.finalTime = `00:${String(sec).padStart(2, '0')}`
     time.innerHTML = `00:${String(sec).padStart(2, '0')}`
 }
 
 setInterval(timer, 1000)
 
-const gameOver = () => {
-    canvas.innerHTML = ''
-    const done = document.createElement('div')
-    const restart = document.createElement('button')
-    const game = document.createElement('span')
-    const score = document.createElement('span')
-    game.classList.add('final')
-    score.classList.add('score')
-    done.classList.add('over')
-    game.innerHTML = 'GAME OVER'
-    restart.value = 'restart'
-    restart.textContent = 'Restart'
-    score.innerHTML = `score: ${scores}`
-    done.append(game)
-    done.append(score)
-    done.append(restart)
-    canvas.append(done)
-    restart.addEventListener('click', () => {
-        location.reload()
-    })
-}
-
-const gameWin = () => {
-    // console.log('------->', invaders.childNodes.length)
-    if (invaders.childNodes.length === 0) {
+const gameResult = () => {
+    if (!finalResult.status || invaders.childNodes.length === 0) {
         canvas.innerHTML = ''
         const done = document.createElement('div')
         const restart = document.createElement('button')
         const game = document.createElement('span')
         const score = document.createElement('span')
+        const timeDisplay = document.createElement('span')
         game.classList.add('final')
         score.classList.add('score')
+        timeDisplay.classList.add('time')
         done.classList.add('over')
-        game.innerHTML = 'You Win'
+        if (invaders.childNodes.length === 0) {
+            canSHoot = false
+            game.innerHTML = finalResult.safe
+        }
+        if (!finalResult.status) {
+            game.innerHTML = finalResult.fail
+        }
         restart.value = 'restart'
         restart.textContent = 'Restart'
-        score.innerHTML = `score: ${scores}`
+        score.innerHTML = `score: ${finalResult.scores}`
+        timeDisplay.innerHTML = `${finalResult.finalTime}`
         done.append(game)
         done.append(score)
+        done.append(timeDisplay)
         done.append(restart)
         canvas.append(done)
         restart.addEventListener('click', () => {
             location.reload()
         })
     }
+
 }
 
-const roundNum = (nbr) => {
-    return Math.floor(nbr / 100) * 100
+export const dangerINvader = () => {
+    const invaders = document.querySelectorAll(`[class^=invader_]`)
+    let rondom = getRandomNums(17, 10)
+    invaders.forEach((invader, index) => {
+        if (rondom.includes(index)) {
+            let invaderX = invader.getBoundingClientRect().left - canvas.getBoundingClientRect().left
+            let invaderY = canvas.clientHeight - invader.clientHeight - 20
+            createBomb(invaderX, invaderY)
+        }
+        // console.log(`INVADER =>`, invader, `, INDEX => ${index}`)
+    })
+    console.log('rondom ', rondom)
+}
+let bombs = []
+
+const moveBomb = (bomb) => {
+    console.log(bomb)
+}
+
+const createBomb = (invaderX, invaderY) => {
+    console.log('PARAMS ', invaderX, invaderY)
+    const bomb = document.createElement('span')
+    bomb.classList.add('bomb')
+    bomb.style.left = `${invaderX}px`
+    bomb.style.top = `${20}px`
+    bomb.style.transform = `translate(50%)`
+    invaders.appendChild(bomb)
+    bombs.push(bomb)
+    moveBomb(bomb)
+    // moveBullet(bomb)
 }
 
 const annimateInvaders = () => {
     const enemyRect = invaders.getBoundingClientRect()
     const canvasRect = canvas.getBoundingClientRect()
-    // console.log('invaderDIV----------- ', enemyRect)
-    const speed = 2
-    // console.log('---> ', roundNum(player.getBoundingClientRect().top), roundNum(enemyRect.bottom))
     switch (true) {
         case (roundNum(player.getBoundingClientRect().top) - 100 === roundNum(enemyRect.bottom)):
+            finalResult.status = false
             canSHoot = false
-            setTimeout(gameOver, 3000)
+            setTimeout(gameResult, 3000)
             return
-        case (!reverse && canvasRect.right > enemyRect.right):
-            moveX += speed
+        case (!invaderParams.reverse && canvasRect.right > enemyRect.right):
+            invaderParams.moveX += invaderParams.speedX
             break
-        case (!reverse && canvasRect.right == enemyRect.right):
-            reverse = true
-            moveY += 13
+        case (!invaderParams.reverse && canvasRect.right == enemyRect.right):
+            invaderParams.reverse = true
+            invaderParams.moveY += invaderParams.speedY
             break
-        case (reverse && canvasRect.left < enemyRect.left):
-            moveX -= speed
+        case (invaderParams.reverse && canvasRect.left < enemyRect.left):
+            invaderParams.moveX -= invaderParams.speedX
             break
-        case (reverse && canvasRect.left == enemyRect.left):
-            reverse = false
-            moveY += 13
+        case (invaderParams.reverse && canvasRect.left == enemyRect.left):
+            invaderParams.reverse = false
+            invaderParams.moveY += invaderParams.speedY
             break
     }
-    // moveX -= 5
+    // invaderParams.moveX -= 5
     if (canSHoot) {
-        invaders.style.transform = `translate(${moveX}px,${moveY}px)`
+        invaders.style.transform = `translate(${invaderParams.moveX}px,${invaderParams.moveY}px)`
     }
+    // dangerINvader()
     requestAnimationFrame(annimateInvaders)
 }
 annimateInvaders()
 
-const checkCollision = (bullet, invader) => {
-    const bulletRect = bullet.getBoundingClientRect()
-    const invaderRect = invader.getBoundingClientRect()
-    let collision = bulletRect.bottom < invaderRect.top ||
-        bulletRect.top > invaderRect.bottom ||
-        bulletRect.right < invaderRect.left ||
-        bulletRect.left > invaderRect.right
-    return !(collision)
-}
-
-const UpdateLives = () => {
-    const lives = gameInfo.querySelector('.lives')
-    const hearts = ['./img/live.png', './img/live.png', './img/death.png']
-    hearts.forEach((path) => {
-        const heart = document.createElement('img')
-        heart.src = path
-        heart.style.width = '30px'
-        // heart.style.paddingTop = '15px'
-        lives.append(heart)
-
-    })
-    // lives.innerHTML = '';
-}
 
 const updateScore = () => {
     const scoreElement = gameInfo.querySelector('.score')
     if (scoreElement) {
-        scoreElement.textContent = `Score: ${scores}`
+        scoreElement.textContent = `Score: ${finalResult.scores}`
     }
 }
 
 const eliminateInvader = (bullet) => {
-    setTimeout(gameWin, 3000)
+    setTimeout(gameResult, 3000)
     const invadersList = document.querySelectorAll('[class^="invader_"]')
     invadersList.forEach(invader => {
         if (checkCollision(bullet, invader)) {
             invader.remove()
-            invaderAmount--
-            scores += 10
+            invaderParams.invaderAmount--
+            finalResult.scores += 10
             // console.log('Score:', scores)
             bullet.remove()
             bullets = bullets.filter(b => b !== bullet)
@@ -205,34 +200,8 @@ const eliminateInvader = (bullet) => {
 }
 
 UpdateLives()
-
-const createINvaders = () => {
-    const invadersinLine = 6
-    const X_space = 65
-    const Y_space = 60
-    pointsMap.forEach((enemy, index) => {
-        const enemyPOs = document.createElement('div')
-        let x = (index % invadersinLine) * X_space
-        let y = Math.floor((index / invadersinLine)) * Y_space
-        switch (enemy) {
-            case (0):
-                enemyPOs.classList.add('invader_Pink')
-                break
-            case (1):
-                enemyPOs.classList.add('invader_White')
-                break
-            case (2):
-                enemyPOs.classList.add('invader_Blue')
-                break
-        }
-        enemyPOs.style.position = 'absolute';
-        enemyPOs.style.left = `${x}px`
-        enemyPOs.style.top = `${y}px`
-        invaders.append(enemyPOs)
-    })
-}
-
 createINvaders()
+
 
 function test() {
     const canvasWidth = canvas.clientWidth
@@ -252,8 +221,8 @@ function test() {
 
 }
 
-
 function moveBullet(bullet) {
+    console.log('-------------player')
     let bTop = parseInt(bullet.style.top)
     bTop -= moveAmount
     bullet.style.top = `${bTop}px`
@@ -265,9 +234,11 @@ function moveBullet(bullet) {
     } else {
         requestAnimationFrame(() => moveBullet(bullet))
     }
+
+
 }
 
-function createBullet(playerX) {
+function createBullet(playerX, playerInitY) {
     const ship = document.querySelector('.player')
     if (ship) {
         const bullet = document.createElement('span')
@@ -275,13 +246,10 @@ function createBullet(playerX) {
         bullet.style.left = `${playerX}px`
         bullet.style.top = `${playerInitY}px`
         bullet.style.transform = `translate(50%)`
-
         canvas.appendChild(bullet)
         bullets.push(bullet)
         moveBullet(bullet)
     }
 }
-
-
 
 requestAnimationFrame(test)
