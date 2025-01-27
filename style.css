@@ -47,12 +47,13 @@ body {
 }
 
 .player {
-    width: 13%;
-    height: 20%;
+    width: 11%;
+    height: 16%;
     background-color: yellow;
     position: absolute;
-    top: 545px;
+    top: 571px;
     background: url('./img/space_shipPk.png');
+    background-size: auto;
     background-size: cover;
 }
 
@@ -63,14 +64,14 @@ body {
 .bullet {
     width: 15px;
     height: 50px;
-    margin: 24px;
+    margin: 20px;
     border-radius: 50%;
     background: url('./img/bomb.png');
     position: absolute;
 }
 
 .invaders {
-    width: fit-content;
+    width: fit-content;  
     width: 400px;
     /* display: flex;
     flex-wrap: wrap; */
@@ -149,4 +150,12 @@ body {
 .canvas .time {
     font-size: 25px;
     color: #fff;
+}
+.bomb {
+    width: 15%;
+    height: 15%;
+    background-color: #d32a2a;
+    /* margin: 20px; */
+    border-radius: 50%;
+    position: absolute;
 }

@@ -1,4 +1,4 @@
-import { dangerINvader } from "./script.js"
+// import { dangerINvader } from "./script.js"
 
 export const pointsMap = [
     0, 0, 0, 0, 0, 0,
@@ -31,5 +31,4 @@ export const createINvaders = () => {
         enemyPOs.style.top = `${y}px`
         invaders.append(enemyPOs)
     })
-    dangerINvader()
 }
