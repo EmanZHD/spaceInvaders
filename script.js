@@ -10,7 +10,7 @@ const invaderParams = {
     moveX: 0,
     moveY: 0,
     reverse: false,
-    speedX: 2,
+    speedX: 0.5,
     speedY: 13,
 }
 
@@ -73,14 +73,15 @@ const timer = () => {
     finalResult.finalTime = `00:${String(sec).padStart(2, '0')}`
     time.innerHTML = `00:${String(sec).padStart(2, '0')}`
 }
+
 const speedControl = () => {
-    console.log(speedInvader)
+    // console.log(speedInvader)
     if ((speedInvader.value).length === 0) {
         invaderParams.speedX = 2
     } else {
         invaderParams.speedX = speedInvader.value
     }
-    console.log('test', (speedInvader.value).length)
+    // console.log('test', (speedInvader.value).length)
 }
 
 speedInvader.addEventListener('input', speedControl)
@@ -129,7 +130,7 @@ export const dangerINvader = () => {
         if (rondom.includes(index)) {
             let invaderX = invader.getBoundingClientRect().left - canvas.getBoundingClientRect().left
             let invaderY = canvas.clientHeight - invader.clientHeight - 20
-            createBomb(invader, invaderX, invaderY)
+            setInterval(() => createBomb(invader, invaderX, invaderY), 3000)
         }
         // console.log(`INVADER =>`, invader, `, INDEX => ${index}`)
     })
@@ -138,7 +139,16 @@ export const dangerINvader = () => {
 let bombs = []
 
 const moveBomb = (bomb) => {
-    console.log(bomb)
+    console.log('bomb ', bomb.getBoundingClientRect().top)
+    let b = parseInt(bomb.style.top)
+    b += 1
+    bomb.style.top = `${b}px`
+    console.log('track bomb', parseInt(bomb.style.bottom))
+    if (b > 900) {
+        bomb.remove()
+    } else {
+        requestAnimationFrame(() => moveBomb(bomb))
+    }
 }
 
 const createBomb = (index, invaderX, invaderY) => {
@@ -146,8 +156,8 @@ const createBomb = (index, invaderX, invaderY) => {
     const bomb = document.createElement('span')
     bomb.classList.add('bomb')
     // bomb.style.left = `${invaderX}px`
-    // bomb.style.top = `${20}px`
-    // bomb.style.transform = `translate(50%)`
+    bomb.style.top = `${10}px`
+    bomb.style.transform = `translate(30%)`
     index.appendChild(bomb)
     bombs.push(bomb)
     moveBomb(bomb)
@@ -157,7 +167,6 @@ const createBomb = (index, invaderX, invaderY) => {
 const annimateInvaders = () => {
     const enemyRect = invaders.getBoundingClientRect()
     const canvasRect = canvas.getBoundingClientRect()
-    console.log('----------', invaderParams.speedX)
     switch (true) {
         case (roundNum(player.getBoundingClientRect().top) - 100 === roundNum(enemyRect.bottom)):
             finalResult.status = false

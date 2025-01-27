@@ -71,7 +71,7 @@ body {
 }
 
 .invaders {
-    width: fit-content;  
+    width: fit-content;
     width: 400px;
     /* display: flex;
     flex-wrap: wrap; */
@@ -151,11 +151,14 @@ body {
     font-size: 25px;
     color: #fff;
 }
+
 .bomb {
-    width: 15%;
-    height: 15%;
-    background-color: #d32a2a;
-    /* margin: 20px; */
+    width: 35%;
+    height: 35%;
+    /* top: 10px; */
+    background: url('./img/bomb0.png');
+    /* margin-top: 2px; */
+    margin: 21px;
     border-radius: 50%;
     position: absolute;
 }
