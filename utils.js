@@ -17,21 +17,11 @@ export const checkCollision = (bullet, invader) => {
     return !(collision)
 }
 
-export const UpdateLives = (livesPercentage) => {
+export const UpdateLives = (livesValue) => {
     const gameInfo = document.querySelector('.game-info')
     const livesProgress = gameInfo.querySelector('.lives')
-    livesProgress.style.width = `${livesPercentage}%`;
-    livesProgress.textContent = `${livesPercentage}%`;
-    // const hearts = ['./img/live.png', './img/live.png', './img/death.png']
-    // hearts.forEach((path) => {
-    //     const heart = document.createElement('img')
-    //     heart.src = path
-    //     heart.style.width = '30px'
-    //     // heart.style.paddingTop = '15px'
-    //     lives.append(heart)
-
-    // })
-    // lives.innerHTML = '';
+    livesProgress.style.width = `${livesValue}%`
+    livesProgress.textContent = `${livesValue}%`
 }
 
 export const getRandomNums = (max, count) => {
