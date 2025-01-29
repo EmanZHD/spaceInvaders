@@ -7,7 +7,7 @@ export function getPlayerXRelativeToCanvas(player, canvas) {
 export const roundNum = (nbr) => {
     return Math.floor(nbr / 100) * 100
 }
-export const checkCollision = (bullet, invader) => {
+export const collision_invaderBomb = (bullet, invader) => {
     const bulletRect = bullet.getBoundingClientRect()
     const invaderRect = invader.getBoundingClientRect()
     let collision = bulletRect.bottom < invaderRect.top ||
@@ -17,7 +17,7 @@ export const checkCollision = (bullet, invader) => {
     return !(collision)
 }
 
-export const UpdateLives = (livesValue) => {
+export const decrease_lives = (livesValue) => {
     const gameInfo = document.querySelector('.game-info')
     const livesProgress = gameInfo.querySelector('.lives')
     livesProgress.style.width = `${livesValue}%`

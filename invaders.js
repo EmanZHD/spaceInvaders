@@ -1,4 +1,4 @@
-// import { dangerINvader } from "./script.js"
+// import { danger_invaders } from "./script.js"
 
 export const pointsMap = [
     0, 0, 0, 0, 0, 0,
@@ -6,7 +6,7 @@ export const pointsMap = [
     2, 2, 2, 2, 2, 2
 ]
 
-export const createINvaders = () => {
+export const create_invaders = () => {
     const invaders = document.querySelector('.invaders')
     const invadersinLine = 6
     const X_space = 65

@@ -1,9 +1,9 @@
 import {
     getPlayerXRelativeToCanvas, roundNum,
-    checkCollision, UpdateLives, getRandomNums
+    collision_invaderBomb, decrease_lives, getRandomNums
 } from './utils.js'
 
-import { createINvaders } from "./invaders.js"
+import { create_invaders } from "./invaders.js"
 
 const invaderParams = {
     invaderAmount: 24,
@@ -51,7 +51,7 @@ document.addEventListener('keydown', e => {
     }
     const playerX = getPlayerXRelativeToCanvas(player, canvas)
     if (canSHoot && (e.key === ' ' || e.key === 'Enter')) {
-        createBullet(playerX, playerInitY)
+        create_shipBomb(playerX, playerInitY)
     }
 })
 
@@ -117,20 +117,19 @@ const gameResult = () => {
     }
 }
 
-export const dangerINvader = () => {
+export const danger_invaders = () => {
     const invaders = document.querySelectorAll(`[class^=invader_]`)
     let rondom = getRandomNums(17, 2)
     invaders.forEach((invader, index) => {
         if (rondom.includes(index)) {
-            setInterval(() => createBomb(invader), 3000)
+            setInterval(() => create_invaderBomb(invader), 3000)
         }
     })
 }
 
-const checkBombPlayerCollision = (bomb, player) => {
+const collision_shipBomb = (bomb, player) => {
     const bombRect = bomb.getBoundingClientRect()
     const playerRect = player.getBoundingClientRect()
-
     return !(
         bombRect.bottom < playerRect.top ||
         bombRect.top > playerRect.bottom ||
@@ -139,7 +138,7 @@ const checkBombPlayerCollision = (bomb, player) => {
     )
 }
 
-const createBomb = (invader) => {
+const create_invaderBomb = (invader) => {
     const ship = document.querySelector('.player')
     if (ship) {
         const bomb = document.createElement('span')
@@ -155,30 +154,30 @@ const createBomb = (invader) => {
     }
 }
 
-const updateScore = () => {
+const increase_score = () => {
     const scoreElement = gameInfo.querySelector('.score')
     if (scoreElement) {
         scoreElement.textContent = `Score: ${finalResult.scores}`
     }
 }
 
-const eliminateInvader = (bullet) => {
+const eliminate_invader = (bullet) => {
     const invadersList = document.querySelectorAll('[class^="invader_"]')
     // console.log('==| ', )
     invadersList.forEach(invader => {
-        if (checkCollision(bullet, invader)) {
+        if (collision_invaderBomb(bullet, invader)) {
             invader.remove()
             invaderParams.invaderAmount--
             finalResult.scores += 10
             bullet.remove()
             bullets = bullets.filter(b => b !== bullet)
-            updateScore()
+            increase_score()
             setTimeout(gameResult, 3000)
         }
     })
 }
 
-const createBullet = (playerX, playerInitY) => {
+const create_shipBomb = (playerX, playerInitY) => {
     const ship = document.querySelector('.player')
     if (ship) {
         const bullet = document.createElement('span')
@@ -191,7 +190,7 @@ const createBullet = (playerX, playerInitY) => {
     }
 }
 
-const playerMov = () => {
+const move_player = () => {
     if (canSHoot) {
         const canvasWidth = canvas.clientWidth
         const playerWidth = player.clientWidth
@@ -206,10 +205,10 @@ const playerMov = () => {
     }
 }
 
-const bullletMove = () =>{
+const  move_shipBomb = () =>{
     bullets.forEach(bullet => {
         let bTop = parseInt(bullet.style.top)
-        eliminateInvader(bullet)
+        eliminate_invader(bullet)
         bTop -= moveAmount
         bullet.style.top = `${bTop}px`
         console.log(invaderParams.invaderAmount)
@@ -220,15 +219,15 @@ const bullletMove = () =>{
     })
 }
 
-const bombMov = () => {
+const move_invaderBomb = () => {
     bombs.forEach(bomb => {
         let b = parseInt(bomb.style.top)
-        b += 1
+        b += 3
         bomb.style.top = `${b}px`
         const player = document.querySelector('.player')
-        if (player && checkBombPlayerCollision(bomb, player)) {
+        if (player && collision_shipBomb(bomb, player)) {
             progress -= 25
-            UpdateLives(progress)
+            decrease_lives(progress)
             bomb.remove()
             bombs = bombs.filter(b => b !== bomb)
             if (progress === 0) {
@@ -245,7 +244,7 @@ const bombMov = () => {
     })
 } 
 
-const invaderMov = () => {
+const move_invader = () => {
     const enemyRect = invaders.getBoundingClientRect()
     const canvasRect = canvas.getBoundingClientRect()
     switch (true) {
@@ -275,15 +274,15 @@ const invaderMov = () => {
 }
 
 const gameLoop = () => {
-    playerMov()
-    bullletMove()
-    bombMov()
-    invaderMov()
+    move_player()
+    move_shipBomb()
+    move_invaderBomb()
+    move_invader()
     requestAnimationFrame(gameLoop)
 }
 
-createINvaders()
-UpdateLives(progress)
-dangerINvader()
+create_invaders()
+decrease_lives(progress)
+danger_invaders()
 
 requestAnimationFrame(gameLoop)
