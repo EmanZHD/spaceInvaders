@@ -165,22 +165,20 @@ body {
 }
 
 .lives-container {
-    width: 30%; /* Full width of the container */
-    height: 20px; /* Height of the progress bar */
-    background-color: #5b5b5b; /* Background color of the container */
-    border-radius: 15px; /* Rounded corners */
-    overflow: hidden; /* Ensures the inner bar doesn't overflow */
-    /* position: relative; For positioning the percentage text */
+    width: 26%;
+    height: 26%;
+    background-color: #5b5b5b;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 .lives {
-    height: 100%; /* Full height of the container */
-    background-color: red; /* Color of the filled portion */
-    text-align: center; /* Center the percentage text */
-    line-height: 25px; /* Vertically center the text */
-    color: rgb(255, 255, 255); /* Text color */
-    /* font-weight: bold; Bold text */
-    font-size: 70%;
-    border-radius: 15px; /* Rounded corners */
-    transition: width 0.5s ease; /* Smooth transition for width changes */
+    height: 100%;
+    background-color: red;
+    text-align: center;
+    line-height: 116%;
+    color: rgb(255, 255, 255);
+    font-size: 64%;
+    border-radius: 15px;
+    transition: width 0.5s ease;
 }

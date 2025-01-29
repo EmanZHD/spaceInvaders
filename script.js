@@ -157,7 +157,9 @@ const moveBomb = (bomb) => {
     const player = document.querySelector('.player');
     if (player && checkBombPlayerCollision(bomb, player)) {
         // Collision detected, eliminate the player
-        UpdateLives(progress-50)
+        console.log('test ', progress)
+        progress -= 25
+        UpdateLives(progress)
         bomb.remove();
         if (progress === 0){
             finalResult.status = false;
@@ -167,7 +169,7 @@ const moveBomb = (bomb) => {
             return;
         }
     }
-    console.log('track bomb', parseInt(bomb.style.top), bomb.getBoundingClientRect().top-canvas.getBoundingClientRect().top)
+    // console.log('track bomb', parseInt(bomb.style.top), bomb.getBoundingClientRect().top-canvas.getBoundingClientRect().top)
     if (b > canvas.clientHeight) {
         bomb.remove();
     } else {
