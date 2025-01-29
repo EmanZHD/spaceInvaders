@@ -61,7 +61,7 @@ body {
     animation-play-state: paused;
 }
 
-.bullet {
+.ship_Bomb {
     width: 15px;
     height: 50px;
     margin: 20px;
@@ -181,4 +181,15 @@ body {
     font-size: 64%;
     border-radius: 15px;
     transition: width 0.5s ease;
+}
+.pause_card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.275);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
 }
