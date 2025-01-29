@@ -10,7 +10,7 @@ const invaderParams = {
     moveX: 0,
     moveY: 0,
     reverse: false,
-    speedX: 0.5,
+    speedX: 1,
     speedY: 13,
 }
 
@@ -125,43 +125,76 @@ const gameResult = () => {
 
 export const dangerINvader = () => {
     const invaders = document.querySelectorAll(`[class^=invader_]`)
-    let rondom = getRandomNums(17, 10)
+    let rondom = getRandomNums(17, 2)
     invaders.forEach((invader, index) => {
         if (rondom.includes(index)) {
-            let invaderX = invader.getBoundingClientRect().left - canvas.getBoundingClientRect().left
-            let invaderY = canvas.clientHeight - invader.clientHeight - 20
-            setInterval(() => createBomb(invader, invaderX, invaderY), 3000)
+            // let invaderX = invader.getBoundingClientRect().left - canvas.getBoundingClientRect().left;
+            // let invaderY = invader.getBoundingClientRect().top - canvas.getBoundingClientRect().top
+            setInterval(() => createBomb(invader), 3000)
         }
         // console.log(`INVADER =>`, invader, `, INDEX => ${index}`)
     })
     console.log('rondom ', rondom)
 }
 let bombs = []
+const checkBombPlayerCollision = (bomb, player) => {
+    const bombRect = bomb.getBoundingClientRect();
+    const playerRect = player.getBoundingClientRect();
 
+    return !(
+        bombRect.bottom < playerRect.top ||
+        bombRect.top > playerRect.bottom ||
+        bombRect.right < playerRect.left ||
+        bombRect.left > playerRect.right
+    );
+};
+let progress = 100
 const moveBomb = (bomb) => {
     console.log('bomb ', bomb.getBoundingClientRect().top)
     let b = parseInt(bomb.style.top)
     b += 1
     bomb.style.top = `${b}px`
-    console.log('track bomb', parseInt(bomb.style.bottom))
-    if (b > 900) {
-        bomb.remove()
+    const player = document.querySelector('.player');
+    if (player && checkBombPlayerCollision(bomb, player)) {
+        // Collision detected, eliminate the player
+        UpdateLives(progress-50)
+        bomb.remove();
+        if (progress === 0){
+            finalResult.status = false;
+            canSHoot = false;
+            player.remove();
+            setTimeout(gameResult, 3000);
+            return;
+        }
+    }
+    console.log('track bomb', parseInt(bomb.style.top), bomb.getBoundingClientRect().top-canvas.getBoundingClientRect().top)
+    if (b > canvas.clientHeight) {
+        bomb.remove();
     } else {
-        requestAnimationFrame(() => moveBomb(bomb))
+        requestAnimationFrame(() => moveBomb(bomb));
     }
 }
 
-const createBomb = (index, invaderX, invaderY) => {
-    console.log('PARAMS ', invaderX, invaderY)
-    const bomb = document.createElement('span')
-    bomb.classList.add('bomb')
-    // bomb.style.left = `${invaderX}px`
-    bomb.style.top = `${10}px`
-    bomb.style.transform = `translate(30%)`
-    index.appendChild(bomb)
-    bombs.push(bomb)
-    moveBomb(bomb)
-    // moveBullet(bomb)
+const createBomb = (invader) => {
+    const ship = document.querySelector('.player')
+    if (ship){
+        // console.log('PARAMS ', invaderX, invaderY)
+        const bomb = document.createElement('span')
+        bomb.classList.add('bomb')
+        // bomb.style.left = `${invaderX}px`
+        // bomb.style.top = `${10}px`
+        const invaderRect = invader.getBoundingClientRect();
+        const canvasRect = canvas.getBoundingClientRect();
+
+        // Set the bomb's initial position
+        bomb.style.left = `${invaderRect.left - canvasRect.left + invaderRect.width / 2}px`; // Center the bomb horizontally
+        bomb.style.top = `${invaderRect.top - canvasRect.top}px`;
+        // index.appendChild(bomb)
+        canvas.appendChild(bomb);
+        bombs.push(bomb)
+        moveBomb(bomb)
+        // moveBullet(bomb)
+    }
 }
 
 const annimateInvaders = () => {
@@ -225,6 +258,7 @@ const eliminateInvader = (bullet) => {
 
 UpdateLives()
 createINvaders()
+UpdateLives(progress)
 dangerINvader()
 
 function test() {

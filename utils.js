@@ -7,7 +7,6 @@ export function getPlayerXRelativeToCanvas(player, canvas) {
 export const roundNum = (nbr) => {
     return Math.floor(nbr / 100) * 100
 }
-
 export const checkCollision = (bullet, invader) => {
     const bulletRect = bullet.getBoundingClientRect()
     const invaderRect = invader.getBoundingClientRect()
@@ -18,18 +17,20 @@ export const checkCollision = (bullet, invader) => {
     return !(collision)
 }
 
-export const UpdateLives = () => {
+export const UpdateLives = (livesPercentage) => {
     const gameInfo = document.querySelector('.game-info')
-    const lives = gameInfo.querySelector('.lives')
-    const hearts = ['./img/live.png', './img/live.png', './img/death.png']
-    hearts.forEach((path) => {
-        const heart = document.createElement('img')
-        heart.src = path
-        heart.style.width = '30px'
-        // heart.style.paddingTop = '15px'
-        lives.append(heart)
+    const livesProgress = gameInfo.querySelector('.lives')
+    livesProgress.style.width = `${livesPercentage}%`;
+    livesProgress.textContent = `${livesPercentage}%`;
+    // const hearts = ['./img/live.png', './img/live.png', './img/death.png']
+    // hearts.forEach((path) => {
+    //     const heart = document.createElement('img')
+    //     heart.src = path
+    //     heart.style.width = '30px'
+    //     // heart.style.paddingTop = '15px'
+    //     lives.append(heart)
 
-    })
+    // })
     // lives.innerHTML = '';
 }
 

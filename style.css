@@ -153,12 +153,34 @@ body {
 }
 
 .bomb {
-    width: 35%;
-    height: 35%;
+    position: absolute;
+    width: 1%;
+    height: 3%;
     /* top: 10px; */
-    background: url('./img/bomb0.png');
+    /* background: url('./img/bomb0.png'); */
+    background-color: red;
     /* margin-top: 2px; */
     margin: 21px;
-    border-radius: 50%;
-    position: absolute;
+    /* border-radius: 50%; */
+}
+
+.lives-container {
+    width: 30%; /* Full width of the container */
+    height: 20px; /* Height of the progress bar */
+    background-color: #5b5b5b; /* Background color of the container */
+    border-radius: 15px; /* Rounded corners */
+    overflow: hidden; /* Ensures the inner bar doesn't overflow */
+    /* position: relative; For positioning the percentage text */
+}
+
+.lives {
+    height: 100%; /* Full height of the container */
+    background-color: red; /* Color of the filled portion */
+    text-align: center; /* Center the percentage text */
+    line-height: 25px; /* Vertically center the text */
+    color: rgb(255, 255, 255); /* Text color */
+    /* font-weight: bold; Bold text */
+    font-size: 70%;
+    border-radius: 15px; /* Rounded corners */
+    transition: width 0.5s ease; /* Smooth transition for width changes */
 }
