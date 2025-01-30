@@ -100,7 +100,8 @@ body {
 
 .over,
 .pause_card,
-.startGame {
+.startGame,
+.middle_card {
     position: absolute;
     display: flex;
     flex-direction: column;

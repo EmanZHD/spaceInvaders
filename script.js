@@ -44,7 +44,8 @@ const gameParams = {
     start: 0,
     pauseGame: false,
     progress: 100,
-    keys: {}
+    keys: {},
+    current_time: 0
 }
 
 // keys = {}
@@ -76,17 +77,18 @@ document.addEventListener('keydown', e => {
 
 const timer = () => {
     const time = document.querySelector('.timer')
-    let sec = +(time.textContent.split(':')[1])
-    if (sec === 0) {
+    gameParams.current_time  = +(time.textContent.split(':')[1])
+    if ( gameParams.current_time === 0) {
         shipParams.canShoot = false
+        gameParams.pauseGame = true
         finalResult.status = false
         setTimeout(gameResult, 3000)
     }
-    if (sec !== 0 && shipParams.canShoot) {
-        sec--
+    if (gameParams.current_time !== 0 && !gameParams.pauseGame) {
+       gameParams.current_time--
     }
-    finalResult.finalTime = `00:${String(sec).padStart(2, '0')}`
-    time.innerHTML = `00:${String(sec).padStart(2, '0')}`
+    finalResult.finalTime = `00:${String(gameParams.current_time).padStart(2, '0')}`
+    time.innerHTML = `00:${String(gameParams.current_time).padStart(2, '0')}`
 }
 
 // const speedControl = () => {
@@ -104,6 +106,7 @@ setInterval(timer, 1000)
 const gameResult = () => {
     const Total_invaders = document.querySelectorAll('[class^="invader_"]').length
     if (!finalResult.status || Total_invaders === 0) {
+        gameParams.pauseGame = true
         canvas.innerHTML = ''
         const done = document.createElement('div')
         const restart = document.createElement('button')
@@ -198,7 +201,7 @@ const eliminate_invader = (bomb) => {
 
 const create_shipBomb = (playerX, playerInitY) => {
     const ship = document.querySelector('.player')
-    if (ship) {
+    if (ship && !gameParams.pauseGame) {
         const bomb = document.createElement('span')
         bomb.classList.add('ship_Bomb')
         bomb.style.left = `${playerX}px`
@@ -210,7 +213,7 @@ const create_shipBomb = (playerX, playerInitY) => {
 }
 
 const move_player = () => {
-    if (shipParams.canShoot) {
+    if (!gameParams.pauseGame) {
         const canvasWidth = canvas.clientWidth
         const playerWidth = player.clientWidth
         const playerX = getPlayerXRelativeToCanvas(player, canvas)
@@ -230,7 +233,7 @@ const move_shipBomb = () => {
         eliminate_invader(bomb)
         bTop -= shipParams.speed
         bomb.style.top = `${bTop}px`
-        console.log(invaderParams.invaderAmount)
+        // console.log(invaderParams.invaderAmount)
         if (bTop < 0) {
             bomb.remove()
             shipParams.bombs = shipParams.bombs.filter(b => b !== bomb)
@@ -287,7 +290,7 @@ const move_invader = () => {
             invaderParams.moveY += invaderParams.speedY
             break
     }
-    if (shipParams.canShoot) {
+    if (!gameParams.pauseGame) {
         invaders.style.transform = `translate(${invaderParams.moveX}px,${invaderParams.moveY}px)`
     }
 }
@@ -300,6 +303,25 @@ const game_continue = () => {
         pause_card.remove()
     }
     // console.log('continue gamee   ==')
+}
+
+const middle = () => {
+    if (gameParams.current_time === 10) {
+        gameParams.pauseGame = true
+        const pauseCard = document.createElement('div')
+        pauseCard.classList.add('middle_card')
+        pauseCard.innerHTML = `
+            <div class="btn">
+                <span>Less than 10 seconds remaining</span>
+            </div>
+        `
+        canvas.append(pauseCard)
+        setTimeout(() => {
+            pauseCard.remove()
+            gameParams.pauseGame = false
+            gameParams.current_time += 2
+        }, 2000)
+    }
 }
 
 const display_pause = () => {
@@ -317,7 +339,9 @@ const display_pause = () => {
     const btn_continue = document.querySelector('.continue')
     const btn_restart = document.querySelector('.restart')
     btn_continue.addEventListener('click', () => game_continue())
-    btn_restart.addEventListener('click', () => location.reload())
+    btn_restart.addEventListener('click', () => { 
+        location.reload()
+    })
 }
 
 const handle_pause = () => {
@@ -361,6 +385,7 @@ const gameLoop = () => {
         btn_start.addEventListener('click', () => handle_start())
     }
     if (!gameParams.pauseGame) {
+        middle()
         move_player()
         move_shipBomb()
         move_invaderBomb()
