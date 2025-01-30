@@ -98,48 +98,6 @@ body {
     }
 }
 
-.over,
-.pause_card,
-.startGame,
-.middle_card {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    width: auto;
-    height: auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.275);
-    color: var(--green);
-    padding: 26px;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 40px;
-}
-
-.over button,
-.continue,
-.restart,
-.start_btn {
-    font-family: "Galindo", serif;
-    font-weight: bolder;
-    font-size: 35%;
-    font-style: normal;
-    background-color: black;
-    color: var(--green);
-    cursor: pointer;
-    padding: 3% 9%;
-    border: 1px solid var(--green);
-    border-radius: 5px;
-    margin: auto auto;
-}
-
-.over button:hover {
-    background-color: var(--green);
-    color: black;
-}
-
 .game-info {
     font-size: 20px;
     margin-bottom: 10px;
@@ -154,11 +112,6 @@ body {
     color: #101020;
 }
 
-.canvas .time,
-.canvas .score {
-    font-size: 50%;
-    color: #fff;
-}
 
 .bomb {
     position: absolute;
@@ -191,14 +144,60 @@ body {
     transition: width 0.5s ease;
 }
 
-/* .pause_card {
+.popup {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.275);
-    color: white;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: #1e1e2f;
     padding: 20px;
-    text-align: center;
     border-radius: 10px;
-} */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    width: 90%;
+}
+
+.popup-title {
+    font-size: 24px;
+    color: #4bd32a;
+    margin-bottom: 10px;
+}
+
+.popup-mssg {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.all_btns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.popup-button {
+    font-family: "Galindo", serif;
+    font-weight: bolder;
+    font-size: 16px;
+    background-color: #4bd32a;
+    color: #101020;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.popup-button:hover {
+    background-color: #3aa822;
+}

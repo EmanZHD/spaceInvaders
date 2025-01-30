@@ -64,9 +64,7 @@ document.addEventListener('keydown', e => {
     // if (shipParams.canShoot && (e.key === ' ' || e.key === 'Enter')) {
     if ((e.key === ' ' || e.key === 'Enter')) {
         if (shipParams.canShoot) {
-
             create_shipBomb(playerX, playerInitY)
-
             shipParams.canShoot = false
             setTimeout(() =>
                 shipParams.canShoot = true
@@ -74,6 +72,41 @@ document.addEventListener('keydown', e => {
         }
     }
 })
+
+const creat_popup = (title, mssg , btns) => {
+    const popup = document.createElement('div')
+    popup.classList.add('popup')
+
+    const content_popup = document.createElement('div')
+    content_popup.classList.add('popup-content')
+
+    const title_popup = document.createElement('h2')
+    title_popup.textContent = title
+    title_popup.classList.add('popup-title')
+
+    const mssg_popup = document.createElement('p')
+    mssg_popup.textContent = mssg
+    mssg_popup.classList.add('popup-mssg')
+
+    content_popup.append(title_popup)
+    content_popup.append(mssg_popup)
+
+    if (btns.length!==0){
+        const allBtns = document.createElement('div')
+        allBtns.classList.add('all_btns')
+        btns.forEach( (btn) => {
+            const button = document.createElement('button')
+            button.textContent = btn.text
+            button.classList.add('popup-button')
+            button.addEventListener('click', btn.action)
+            allBtns.append(button)
+        })
+        content_popup.append(allBtns)
+    }
+    popup.append(content_popup)
+    canvas.append(popup)
+    return popup
+}
 
 const timer = () => {
     const time = document.querySelector('.timer')
@@ -91,57 +124,25 @@ const timer = () => {
     time.innerHTML = `00:${String(gameParams.current_time).padStart(2, '0')}`
 }
 
-// const speedControl = () => {
-//     if ((speedInvader.value).length === 0) {
-//         invaderParams.speedX = 2
-//     } else {
-//         invaderParams.speedX = speedInvader.value
-//     }
-// }
-
-// speedInvader.addEventListener('input', speedControl)
-
 setInterval(timer, 1000)
 
 const gameResult = () => {
     const Total_invaders = document.querySelectorAll('[class^="invader_"]').length
     if (!finalResult.status || Total_invaders === 0) {
         gameParams.pauseGame = true
-        canvas.innerHTML = ''
-        const done = document.createElement('div')
-        const restart = document.createElement('button')
-        const game = document.createElement('span')
-        const score = document.createElement('span')
-        const timeDisplay = document.createElement('span')
-        game.classList.add('final')
-        score.classList.add('score')
-        timeDisplay.classList.add('time')
-        done.classList.add('over')
-        if (Total_invaders === 0) {
-            shipParams.canShoot = false
-            game.innerHTML = finalResult.safe
-        }
-        if (!finalResult.status) {
-            game.innerHTML = finalResult.fail
-        }
-        restart.value = 'restart'
-        restart.textContent = 'Restart'
-        score.innerHTML = `score: ${finalResult.scores}`
-        timeDisplay.innerHTML = `${finalResult.finalTime}`
-        done.append(game)
-        done.append(score)
-        done.append(timeDisplay)
-        done.append(restart)
-        canvas.append(done)
-        restart.addEventListener('click', () => {
-            location.reload()
-        })
+        // canvas.innerHTML = ''
+        let title = Total_invaders === 0 ? finalResult.safe : finalResult.fail
+        let moreInfo = `score: ${finalResult.scores}
+        ${finalResult.finalTime}`
+        creat_popup(title, moreInfo, [
+            {text:'restart', action: ()=> location.reload()}
+        ])
     }
 }
 
 export const danger_invaders = () => {
     const invaders = document.querySelectorAll(`[class^=invader_]`)
-    let rondom = getRandomNums(6, 3)
+    let rondom = getRandomNums(6, 6)
     invaders.forEach((invader, index) => {
         if (rondom.includes(index)) {
             setInterval(() => create_invaderBomb(invader), 3000)
@@ -298,7 +299,7 @@ const move_invader = () => {
 const game_continue = () => {
     gameParams.pauseGame = false
     shipParams.canShoot = true
-    const pause_card = document.querySelector('.pause_card')
+    const pause_card = document.querySelector('.popup')
     if (!gameParams.pauseGame) {
         pause_card.remove()
     }
@@ -306,51 +307,36 @@ const game_continue = () => {
 }
 
 const middle = () => {
-    if (gameParams.current_time === 10) {
-        gameParams.pauseGame = true
-        const pauseCard = document.createElement('div')
-        pauseCard.classList.add('middle_card')
-        pauseCard.innerHTML = `
-            <div class="btn">
-                <span>Less than 10 seconds remaining</span>
-            </div>
-        `
-        canvas.append(pauseCard)
-        setTimeout(() => {
-            pauseCard.remove()
-            gameParams.pauseGame = false
-            gameParams.current_time += 2
-        }, 2000)
-    }
+    if (gameParams.current_time === 10){
+     creat_popup( 'caution', 'Less than 10 seconds remaining', [])  
+     setTimeout(() => {
+        const pauseCard = document.querySelector('.popup')
+        pauseCard.remove()
+        gameParams.pauseGame = false
+        gameParams.current_time += 2
+    }, 2000)
+
+    } 
 }
 
 const display_pause = () => {
-    const pauseCard = document.createElement('div')
-    pauseCard.classList.add('pause_card')
-    pauseCard.innerHTML = `
-    <span>Paused</span>
-    <div class="btn">
-        <button class="continue">continue</button>
-        <button class="restart">restart</button>
-    </div>
-    `
-    canvas.append(pauseCard)
-
-    const btn_continue = document.querySelector('.continue')
-    const btn_restart = document.querySelector('.restart')
-    btn_continue.addEventListener('click', () => game_continue())
-    btn_restart.addEventListener('click', () => { 
-        location.reload()
-    })
+    creat_popup(
+        'Paused',
+        'The game is paused.',
+        [
+            { text: 'continue', action: () => game_continue() },
+            { text: 'restart', action: () => location.reload() }
+        ]
+    )
 }
 
 const handle_pause = () => {
     const check_card = document.querySelector('.pause_card')
     shipParams.canShoot = false
     gameParams.pauseGame = true
-    if (check_card) {
-        check_card.remove()
-    }
+    // if (check_card) {
+    //     check_card.remove()
+    // }
     if (handle_pause) {
         display_pause()
     }
@@ -359,17 +345,14 @@ const handle_pause = () => {
 btn_pause.addEventListener('click', () => handle_pause())
 
 const init = () => {
-    const start_game = document.createElement('start')
-    start_game.classList.add('startGame')
-    start_game.innerHTML = `
-    <span>START</span>
-    <button class="start_btn">start</button>`
-    canvas.append(start_game)
+    creat_popup('SPACE INVADERS', '', [
+        {text: 'start now', action: () => handle_start() }
+    ])
 }
 
 // let start = 0
 const handle_start = () => {
-    const start_card = document.querySelector('.startGame')
+    const start_card = document.querySelector('.popup')
     start_card.remove()
     gameParams.pauseGame = false
     shipParams.canShoot = true
@@ -381,8 +364,6 @@ const gameLoop = () => {
         shipParams.canShoot = false
         gameParams.start = 1
         init()
-        const btn_start = document.querySelector('.start_btn')
-        btn_start.addEventListener('click', () => handle_start())
     }
     if (!gameParams.pauseGame) {
         middle()
