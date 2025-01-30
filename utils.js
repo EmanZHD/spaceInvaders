@@ -29,7 +29,7 @@ export const getRandomNums = (max, count) => {
     let i = 0
     while (count > i) {
         i++
-        const randomNumber = Math.floor(Math.random() * max)
+        const randomNumber = Math.floor(Math.random() * max + 1)
         randomNumbers.push(randomNumber)
     }
     return Array.from(new Set(randomNumbers))

@@ -62,11 +62,11 @@ body {
 }
 
 .ship_Bomb {
-    width: 15px;
-    height: 50px;
-    margin: 20px;
+    width: 2%;
+    height: 6%;
+    margin: 3%;
     border-radius: 50%;
-    background: url('./img/bomb.png');
+    background: url('./img/bomb.png') no-repeat fixed center center / cover;
     position: absolute;
 }
 
@@ -98,29 +98,40 @@ body {
     }
 }
 
-.over {
+.over,
+.pause_card,
+.startGame {
+    position: absolute;
     display: flex;
     flex-direction: column;
-    margin-top: 40%;
+    width: auto;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.275);
     color: var(--green);
-    font-size: 50px;
-    /* justify-content: center; */
-    /* text-align: center; */
-    align-items: center;
+    padding: 26px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 40px;
 }
 
-.over button {
+.over button,
+.continue,
+.restart,
+.start_btn {
     font-family: "Galindo", serif;
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 35%;
     font-style: normal;
     background-color: black;
     color: var(--green);
     cursor: pointer;
-    padding: 10px 20px;
-    border: 2px solid var(--green);
+    padding: 3% 9%;
+    border: 1px solid var(--green);
     border-radius: 5px;
-    margin-top: 20px;
+    margin: auto auto;
 }
 
 .over button:hover {
@@ -142,23 +153,19 @@ body {
     color: #101020;
 }
 
+.canvas .time,
 .canvas .score {
-    font-size: 25px;
-    color: #fff;
-}
-
-.canvas .time {
-    font-size: 25px;
+    font-size: 50%;
     color: #fff;
 }
 
 .bomb {
     position: absolute;
-    width: 1%;
-    height: 3%;
+    width: 3%;
+    height: 2%;
     /* top: 10px; */
-    /* background: url('./img/bomb0.png'); */
-    background-color: red;
+    background: url('./img/bomb0.png');
+    /* background-color: red; */
     /* margin-top: 2px; */
     margin: 21px;
     /* border-radius: 50%; */
@@ -176,13 +183,14 @@ body {
     height: 100%;
     background-color: red;
     text-align: center;
-    line-height: 116%;
+    line-height: 148%;
     color: rgb(255, 255, 255);
-    font-size: 64%;
+    font-size: 51%;
     border-radius: 15px;
     transition: width 0.5s ease;
 }
-.pause_card {
+
+/* .pause_card {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -192,4 +200,4 @@ body {
     padding: 20px;
     text-align: center;
     border-radius: 10px;
-}
+} */

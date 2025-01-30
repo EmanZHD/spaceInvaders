@@ -9,7 +9,7 @@ const canvas = document.querySelector('.canvas')
 const player = document.querySelector('.player')
 const invaders = document.querySelector('.invaders')
 const gameInfo = document.querySelector('.game-info')
-const speedInvader = document.querySelector('.speed')
+// const speedInvader = document.querySelector('.speed')
 const btn_pause = document.querySelector('.pause')
 
 let playerInitX = canvas.clientWidth / 2 - player.clientWidth / 2
@@ -22,14 +22,14 @@ const invaderParams = {
     reverse: false,
     speedX: 1,
     speedY: 13,
-    bombs : []
+    bombs: []
 }
 
 const shipParams = {
-    bombs : [],
-    canShoot : true,
-    moveHor : playerInitX,
-    speed : 10
+    bombs: [],
+    canShoot: true,
+    moveHor: playerInitX,
+    speed: 10
 }
 
 const finalResult = {
@@ -41,9 +41,10 @@ const finalResult = {
 }
 
 const gameParams = {
-    pauseGame : false,
-    progress : 100,
-    keys : {}
+    start: 0,
+    pauseGame: false,
+    progress: 100,
+    keys: {}
 }
 
 // keys = {}
@@ -54,13 +55,22 @@ document.addEventListener('keyup', e => {
 })
 
 document.addEventListener('keydown', e => {
+    const playerX = getPlayerXRelativeToCanvas(player, canvas)
     gameParams.keys[e.key] = true
     if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
-        pause()
+        handle_pause()
     }
-    const playerX = getPlayerXRelativeToCanvas(player, canvas)
-    if (shipParams.canShoot && (e.key === ' ' || e.key === 'Enter')) {
-        create_shipBomb(playerX, playerInitY)
+    // if (shipParams.canShoot && (e.key === ' ' || e.key === 'Enter')) {
+    if ((e.key === ' ' || e.key === 'Enter')) {
+        if (shipParams.canShoot) {
+
+            create_shipBomb(playerX, playerInitY)
+
+            shipParams.canShoot = false
+            setTimeout(() =>
+                shipParams.canShoot = true
+                , 200)
+        }
     }
 })
 
@@ -79,15 +89,15 @@ const timer = () => {
     time.innerHTML = `00:${String(sec).padStart(2, '0')}`
 }
 
-const speedControl = () => {
-    if ((speedInvader.value).length === 0) {
-        invaderParams.speedX = 2
-    } else {
-        invaderParams.speedX = speedInvader.value
-    }
-}
+// const speedControl = () => {
+//     if ((speedInvader.value).length === 0) {
+//         invaderParams.speedX = 2
+//     } else {
+//         invaderParams.speedX = speedInvader.value
+//     }
+// }
 
-speedInvader.addEventListener('input', speedControl)
+// speedInvader.addEventListener('input', speedControl)
 
 setInterval(timer, 1000)
 
@@ -128,7 +138,7 @@ const gameResult = () => {
 
 export const danger_invaders = () => {
     const invaders = document.querySelectorAll(`[class^=invader_]`)
-    let rondom = getRandomNums(17, 2)
+    let rondom = getRandomNums(6, 3)
     invaders.forEach((invader, index) => {
         if (rondom.includes(index)) {
             setInterval(() => create_invaderBomb(invader), 3000)
@@ -149,7 +159,7 @@ const collision_shipBomb = (bomb, player) => {
 
 const create_invaderBomb = (invader) => {
     const ship = document.querySelector('.player')
-    if (ship) {
+    if (ship && !gameParams.pauseGame) {
         const bomb = document.createElement('span')
         bomb.classList.add('bomb')
 
@@ -214,7 +224,7 @@ const move_player = () => {
     }
 }
 
-const  move_shipBomb = () =>{
+const move_shipBomb = () => {
     shipParams.bombs.forEach(bomb => {
         let bTop = parseInt(bomb.style.top)
         eliminate_invader(bomb)
@@ -235,7 +245,7 @@ const move_invaderBomb = () => {
         bomb.style.top = `${b}px`
         const player = document.querySelector('.player')
         if (player && collision_shipBomb(bomb, player)) {
-           gameParams.progress -= 25
+            gameParams.progress -= 25
             decrease_lives(gameParams.progress)
             bomb.remove()
             invaderParams.bombs = invaderParams.bombs.filter(b => b !== bomb)
@@ -251,7 +261,7 @@ const move_invaderBomb = () => {
             invaderParams.bombs = invaderParams.bombs.filter(b => b !== bomb)
         }
     })
-} 
+}
 
 const move_invader = () => {
     const enemyRect = invaders.getBoundingClientRect()
@@ -284,8 +294,9 @@ const move_invader = () => {
 
 const game_continue = () => {
     gameParams.pauseGame = false
+    shipParams.canShoot = true
     const pause_card = document.querySelector('.pause_card')
-    if (!gameParams.pauseGame){
+    if (!gameParams.pauseGame) {
         pause_card.remove()
     }
     // console.log('continue gamee   ==')
@@ -295,34 +306,65 @@ const display_pause = () => {
     const pauseCard = document.createElement('div')
     pauseCard.classList.add('pause_card')
     pauseCard.innerHTML = `
-    <div>Paused</div>
-        <button class="continue">continue</utton>
+    <span>Paused</span>
+    <div class="btn">
+        <button class="continue">continue</button>
         <button class="restart">restart</button>
+    </div>
     `
     canvas.append(pauseCard)
 
     const btn_continue = document.querySelector('.continue')
     const btn_restart = document.querySelector('.restart')
-    btn_continue.addEventListener('click', ()=> game_continue())
-    btn_restart.addEventListener('click', ()=> location.reload())
+    btn_continue.addEventListener('click', () => game_continue())
+    btn_restart.addEventListener('click', () => location.reload())
 }
 
-const pause = () => {
+const handle_pause = () => {
+    const check_card = document.querySelector('.pause_card')
+    shipParams.canShoot = false
     gameParams.pauseGame = true
-    if (pause){
+    if (check_card) {
+        check_card.remove()
+    }
+    if (handle_pause) {
         display_pause()
     }
 }
 
+btn_pause.addEventListener('click', () => handle_pause())
 
-btn_pause.addEventListener('click', ()=> pause())
+const init = () => {
+    const start_game = document.createElement('start')
+    start_game.classList.add('startGame')
+    start_game.innerHTML = `
+    <span>START</span>
+    <button class="start_btn">start</button>`
+    canvas.append(start_game)
+}
+
+// let start = 0
+const handle_start = () => {
+    const start_card = document.querySelector('.startGame')
+    start_card.remove()
+    gameParams.pauseGame = false
+    shipParams.canShoot = true
+}
 
 const gameLoop = () => {
-    if (!gameParams.pauseGame){
-     move_player()
-    move_shipBomb()
-    move_invaderBomb()
-    move_invader()
+    if (gameParams.start === 0) {
+        gameParams.pauseGame = true
+        shipParams.canShoot = false
+        gameParams.start = 1
+        init()
+        const btn_start = document.querySelector('.start_btn')
+        btn_start.addEventListener('click', () => handle_start())
+    }
+    if (!gameParams.pauseGame) {
+        move_player()
+        move_shipBomb()
+        move_invaderBomb()
+        move_invader()
     }
     requestAnimationFrame(gameLoop)
 }
