@@ -3,9 +3,11 @@ export const invaderParams = {
     moveX: 0,
     moveY: 0,
     reverse: false,
-    speedX: 1,
+    speedX: 3,
     speedY: 13,
-    bombs: []
+    bombs: [],
+    // left_Last_invader : Infinity,
+    // right_Last_invader : -Infinity
 }
 
 export const shipParams = {

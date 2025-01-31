@@ -203,48 +203,60 @@ const move_invaderBomb = () => {
     })
 }
 
-// const move_invader = () => {
-//     const enemyRect = invaders.getBoundingClientRect()
-//     const canvasRect = canvas.getBoundingClientRect()
-//     switch (true) {
-//         case (roundNum(player.getBoundingClientRect().top) - 100 === roundNum(enemyRect.bottom)):
-//             finalResult.status = false
-//             shipParams.canShoot = false
-//             setTimeout(gameResult, 3000)
-//             return
-//         case (!invaderParams.reverse && canvasRect.right > enemyRect.right):
-//             invaderParams.moveX += invaderParams.speedX
-//             break
-//         case (!invaderParams.reverse && canvasRect.right == enemyRect.right):
-//             invaderParams.reverse = true
-//             invaderParams.moveY += invaderParams.speedY
-//             break
-//         case (invaderParams.reverse && canvasRect.left < enemyRect.left):
-//             invaderParams.moveX -= invaderParams.speedX
-//             break
-//         case (invaderParams.reverse && canvasRect.left == enemyRect.left):
-//             invaderParams.reverse = false
-//             invaderParams.moveY += invaderParams.speedY
-//             break
-//     }
-//     if (!gameParams.pauseGame) {
-//         invaders.style.transform = `translate(${invaderParams.moveX}px,${invaderParams.moveY}px)`
-//     }
-// }
+const detect_limits = (invaders) =>{
+    let left_Last_invader = Infinity
+    let right_Last_invader = -Infinity
+    let bottom_Last_invader = Infinity
+    invaders.forEach(invader => {
+        const invaderRect = invader.getBoundingClientRect()
+        if (invaderRect.left < left_Last_invader) {
+            left_Last_invader = invaderRect.left
+        }
+        if (invaderRect.right > right_Last_invader) {
+            right_Last_invader = invaderRect.right
+        }
+        if (invaderRect.bottom > bottom_Last_invader) {
+            bottom_Last_invader = invaderRect.bottom
+        }
+    })
+    return {left_Last_invader, right_Last_invader, bottom_Last_invader}
+}
+
 const move_invader = () => {
     const invaders = document.querySelectorAll(`[class^="invader_"]`)
     const canvasRect = canvas.getBoundingClientRect()
-    invaders.forEach((invader) => {
-        const invaderRect = invader.getBoundingClientRect()
-        console.log('invader -> ', invader.style.left)
-        if (!invaderParams.reverse && invaderRect.right < canvasRect.right) {
+
+    const {left_Last_invader, right_Last_invader, bottom_Last_invader} = detect_limits(invaders)
+   
+    switch (true){
+//         case (player.getBoundingClientRect().top <= bottom_Last_invader) :
+//             finalResult.status = false
+//                         shipParams.canShoot = false
+//                         setTimeout(gameResult, 3000)
+// break
+        case (!invaderParams.reverse && right_Last_invader < canvasRect.right):
             invaderParams.moveX += invaderParams.speedX
-        }
-        if (!gameParams.pauseGame) {
-            invader.style.transform = `translate( ${invaderParams.moveX}px, 0px)`
-        }
-    })
+        break
+        case (!invaderParams.reverse && right_Last_invader >= canvasRect.right):
+            invaderParams.reverse = true
+        invaderParams.moveY += invaderParams.speedY
+        break
+        case (invaderParams.reverse && left_Last_invader > canvasRect.left):
+            invaderParams.moveX -= invaderParams.speedX
+        break
+        case (invaderParams.reverse && left_Last_invader <= canvasRect.left):
+            invaderParams.reverse = false
+            invaderParams.moveY += invaderParams.speedY
+        break
+    }
+
+    if (!gameParams.pauseGame) {
+        invaders.forEach(invader => {
+            invader.style.transform = `translate(${invaderParams.moveX}px, ${invaderParams.moveY}px)`
+        })
+    }
 }
+
 const game_continue = () => {
     gameParams.pauseGame = false
     shipParams.canShoot = true

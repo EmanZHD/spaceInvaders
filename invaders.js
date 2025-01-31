@@ -1,17 +1,17 @@
 // import { danger_invaders } from "./script.js"
 
-// export const pointsMap = [
-//     0, 0, 0, 0, 0, 0,
-//     1, 1, 1, 1, 1, 1,
-//     2, 2, 2, 2, 2, 2
-// ]
 export const pointsMap = [
-    0, 0, 0,
-    1, 1, 1,
+    0, 0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1, 1,
+    2, 2, 2, 2, 2, 2
 ]
+// export const pointsMap = [
+//     0, 0, 0,
+//     1, 1, 1,
+// ]
 export const create_invaders = () => {
     const invaders = document.querySelector('.invaders')
-    const invadersinLine = 3
+    const invadersinLine = 6
     const X_space = 50
     const Y_space = 40
     pointsMap.forEach((enemy, index) => {
