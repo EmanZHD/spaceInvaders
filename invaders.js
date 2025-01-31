@@ -9,8 +9,8 @@ export const pointsMap = [
 export const create_invaders = () => {
     const invaders = document.querySelector('.invaders')
     const invadersinLine = 6
-    const X_space = 65
-    const Y_space = 60
+    const X_space = 50
+    const Y_space = 40
     pointsMap.forEach((enemy, index) => {
         const enemyPOs = document.createElement('div')
         let x = (index % invadersinLine) * X_space

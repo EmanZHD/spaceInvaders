@@ -15,6 +15,8 @@ const gameInfo = document.querySelector('.game-info')
 // const speedInvader = document.querySelector('.speed')
 const btn_pause = document.querySelector('.pause')
 
+player.style.bottom = 0
+
 let playerInitX = canvas.clientWidth / 2 - player.clientWidth / 2
 let playerInitY = canvas.clientHeight - player.clientHeight - 20
 
