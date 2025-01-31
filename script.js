@@ -203,35 +203,48 @@ const move_invaderBomb = () => {
     })
 }
 
+// const move_invader = () => {
+//     const enemyRect = invaders.getBoundingClientRect()
+//     const canvasRect = canvas.getBoundingClientRect()
+//     switch (true) {
+//         case (roundNum(player.getBoundingClientRect().top) - 100 === roundNum(enemyRect.bottom)):
+//             finalResult.status = false
+//             shipParams.canShoot = false
+//             setTimeout(gameResult, 3000)
+//             return
+//         case (!invaderParams.reverse && canvasRect.right > enemyRect.right):
+//             invaderParams.moveX += invaderParams.speedX
+//             break
+//         case (!invaderParams.reverse && canvasRect.right == enemyRect.right):
+//             invaderParams.reverse = true
+//             invaderParams.moveY += invaderParams.speedY
+//             break
+//         case (invaderParams.reverse && canvasRect.left < enemyRect.left):
+//             invaderParams.moveX -= invaderParams.speedX
+//             break
+//         case (invaderParams.reverse && canvasRect.left == enemyRect.left):
+//             invaderParams.reverse = false
+//             invaderParams.moveY += invaderParams.speedY
+//             break
+//     }
+//     if (!gameParams.pauseGame) {
+//         invaders.style.transform = `translate(${invaderParams.moveX}px,${invaderParams.moveY}px)`
+//     }
+// }
 const move_invader = () => {
-    const enemyRect = invaders.getBoundingClientRect()
+    const invaders = document.querySelectorAll(`[class^="invader_"]`)
     const canvasRect = canvas.getBoundingClientRect()
-    switch (true) {
-        case (roundNum(player.getBoundingClientRect().top) - 100 === roundNum(enemyRect.bottom)):
-            finalResult.status = false
-            shipParams.canShoot = false
-            setTimeout(gameResult, 3000)
-            return
-        case (!invaderParams.reverse && canvasRect.right > enemyRect.right):
+    invaders.forEach((invader) => {
+        const invaderRect = invader.getBoundingClientRect()
+        console.log('invader -> ', invader.style.left)
+        if (!invaderParams.reverse && invaderRect.right < canvasRect.right) {
             invaderParams.moveX += invaderParams.speedX
-            break
-        case (!invaderParams.reverse && canvasRect.right == enemyRect.right):
-            invaderParams.reverse = true
-            invaderParams.moveY += invaderParams.speedY
-            break
-        case (invaderParams.reverse && canvasRect.left < enemyRect.left):
-            invaderParams.moveX -= invaderParams.speedX
-            break
-        case (invaderParams.reverse && canvasRect.left == enemyRect.left):
-            invaderParams.reverse = false
-            invaderParams.moveY += invaderParams.speedY
-            break
-    }
-    if (!gameParams.pauseGame) {
-        invaders.style.transform = `translate(${invaderParams.moveX}px,${invaderParams.moveY}px)`
-    }
+        }
+        if (!gameParams.pauseGame) {
+            invader.style.transform = `translate( ${invaderParams.moveX}px, 0px)`
+        }
+    })
 }
-
 const game_continue = () => {
     gameParams.pauseGame = false
     shipParams.canShoot = true
