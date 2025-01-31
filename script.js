@@ -17,8 +17,8 @@ const btn_pause = document.querySelector('.pause')
 
 let playerInitX = canvas.clientWidth / 2 - player.clientWidth / 2
 let playerInitY = canvas.clientHeight - player.clientHeight - 20
+
 shipParams.moveHor = playerInitX
-// keys = {}
 player.style.transform = `translate(${playerInitX}px)`
 
 document.addEventListener('keyup', e => {
@@ -31,7 +31,6 @@ document.addEventListener('keydown', e => {
     if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
         handle_pause()
     }
-    // if (shipParams.canShoot && (e.key === ' ' || e.key === 'Enter')) {
     if ((e.key === ' ' || e.key === 'Enter')) {
         if (shipParams.canShoot) {
             create_shipBomb(playerX, playerInitY)
@@ -266,13 +265,9 @@ const display_pause = () => {
 
 const handle_pause = () => {
     document.querySelector('.pause_card')
-    // if (check_card) {
-    //     check_card.remove()
-    // }
     if (!gameParams.pauseGame) {
         shipParams.canShoot = false
         gameParams.pauseGame = true
-        console.log('---------------->')
         display_pause()
     }
 }
@@ -289,7 +284,6 @@ const init = () => {
 const handle_start = () => {
     const start_card = document.querySelector('.popup')
     start_card.remove()
-    // gameParams.start = 1
     gameParams.pauseGame = false
     shipParams.canShoot = true
 }
@@ -316,5 +310,3 @@ decrease_lives(gameParams.progress)
 danger_invaders()
 
 requestAnimationFrame(gameLoop)
-
-//invqderbomb creted during the pquse
