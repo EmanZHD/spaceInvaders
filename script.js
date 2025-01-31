@@ -1,9 +1,12 @@
+import { gameParams, shipParams, invaderParams, finalResult } from './settings.js'
+
 import {
     getPlayerXRelativeToCanvas, roundNum,
     collision_invaderBomb, decrease_lives, getRandomNums
 } from './utils.js'
 
 import { create_invaders } from "./invaders.js"
+import { creat_popup } from './popup.js'
 
 const canvas = document.querySelector('.canvas')
 const player = document.querySelector('.player')
@@ -14,40 +17,7 @@ const btn_pause = document.querySelector('.pause')
 
 let playerInitX = canvas.clientWidth / 2 - player.clientWidth / 2
 let playerInitY = canvas.clientHeight - player.clientHeight - 20
-
-const invaderParams = {
-    invaderAmount: 24,
-    moveX: 0,
-    moveY: 0,
-    reverse: false,
-    speedX: 1,
-    speedY: 13,
-    bombs: []
-}
-
-const shipParams = {
-    bombs: [],
-    canShoot: true,
-    moveHor: playerInitX,
-    speed: 10
-}
-
-const finalResult = {
-    status: true,
-    fail: 'GAME OVER',
-    safe: 'You Win',
-    scores: 0,
-    finalTime: 0,
-}
-
-const gameParams = {
-    start: 0,
-    pauseGame: false,
-    progress: 100,
-    keys: {},
-    current_time: 0
-}
-
+shipParams.moveHor = playerInitX
 // keys = {}
 player.style.transform = `translate(${playerInitX}px)`
 
@@ -73,52 +43,17 @@ document.addEventListener('keydown', e => {
     }
 })
 
-const creat_popup = (title, mssg , btns) => {
-    const popup = document.createElement('div')
-    popup.classList.add('popup')
-
-    const content_popup = document.createElement('div')
-    content_popup.classList.add('popup-content')
-
-    const title_popup = document.createElement('h2')
-    title_popup.textContent = title
-    title_popup.classList.add('popup-title')
-
-    const mssg_popup = document.createElement('p')
-    mssg_popup.textContent = mssg
-    mssg_popup.classList.add('popup-mssg')
-
-    content_popup.append(title_popup)
-    content_popup.append(mssg_popup)
-
-    if (btns.length!==0){
-        const allBtns = document.createElement('div')
-        allBtns.classList.add('all_btns')
-        btns.forEach( (btn) => {
-            const button = document.createElement('button')
-            button.textContent = btn.text
-            button.classList.add('popup-button')
-            button.addEventListener('click', btn.action)
-            allBtns.append(button)
-        })
-        content_popup.append(allBtns)
-    }
-    popup.append(content_popup)
-    canvas.append(popup)
-    return popup
-}
-
 const timer = () => {
     const time = document.querySelector('.timer')
-    gameParams.current_time  = +(time.textContent.split(':')[1])
-    if ( gameParams.current_time === 0) {
+    gameParams.current_time = +(time.textContent.split(':')[1])
+    if (gameParams.current_time === 0) {
         shipParams.canShoot = false
         gameParams.pauseGame = true
         finalResult.status = false
         setTimeout(gameResult, 3000)
     }
     if (gameParams.current_time !== 0 && !gameParams.pauseGame) {
-       gameParams.current_time--
+        gameParams.current_time--
     }
     finalResult.finalTime = `00:${String(gameParams.current_time).padStart(2, '0')}`
     time.innerHTML = `00:${String(gameParams.current_time).padStart(2, '0')}`
@@ -135,7 +70,7 @@ const gameResult = () => {
         let moreInfo = `score: ${finalResult.scores}
         ${finalResult.finalTime}`
         creat_popup(title, moreInfo, [
-            {text:'restart', action: ()=> location.reload()}
+            { text: 'restart', action: () => location.reload() }
         ])
     }
 }
@@ -303,26 +238,25 @@ const game_continue = () => {
     if (!gameParams.pauseGame) {
         pause_card.remove()
     }
-    // console.log('continue gamee   ==')
 }
 
 const middle = () => {
-    if (gameParams.current_time === 10){
-     creat_popup( 'caution', 'Less than 10 seconds remaining', [])  
-     setTimeout(() => {
-        const pauseCard = document.querySelector('.popup')
-        pauseCard.remove()
-        gameParams.pauseGame = false
-        gameParams.current_time += 2
-    }, 2000)
-
-    } 
+    if (gameParams.current_time === 10) {
+        creat_popup('caution', 'Less than 10 seconds remaining', [])
+        gameParams.pauseGame = true
+        setTimeout(() => {
+            const pauseCard = document.querySelector('.popup')
+            pauseCard.remove()
+            gameParams.pauseGame = false
+            gameParams.current_time += 2
+        }, 2000)
+    }
 }
 
 const display_pause = () => {
     creat_popup(
-        'Paused',
-        'The game is paused.',
+        'Pause',
+        'The game is paused',
         [
             { text: 'continue', action: () => game_continue() },
             { text: 'restart', action: () => location.reload() }
@@ -331,13 +265,14 @@ const display_pause = () => {
 }
 
 const handle_pause = () => {
-    const check_card = document.querySelector('.pause_card')
-    shipParams.canShoot = false
-    gameParams.pauseGame = true
+    document.querySelector('.pause_card')
     // if (check_card) {
     //     check_card.remove()
     // }
-    if (handle_pause) {
+    if (!gameParams.pauseGame) {
+        shipParams.canShoot = false
+        gameParams.pauseGame = true
+        console.log('---------------->')
         display_pause()
     }
 }
@@ -346,7 +281,7 @@ btn_pause.addEventListener('click', () => handle_pause())
 
 const init = () => {
     creat_popup('SPACE INVADERS', '', [
-        {text: 'start now', action: () => handle_start() }
+        { text: 'start now', action: () => handle_start() }
     ])
 }
 
@@ -354,6 +289,7 @@ const init = () => {
 const handle_start = () => {
     const start_card = document.querySelector('.popup')
     start_card.remove()
+    // gameParams.start = 1
     gameParams.pauseGame = false
     shipParams.canShoot = true
 }
