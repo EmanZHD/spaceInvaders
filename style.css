@@ -117,8 +117,16 @@ body {
     box-sizing: border-box;
 }
 
-.settings {
+.score img {
+    vertical-align: middle; 
+    width: 29px;
+    height: auto; 
+}
+.settings i {
     cursor: pointer;
+    font-size: 24px; 
+    color: black;
+    cursor: pointer; 
 }
 
 .bomb {

@@ -172,8 +172,8 @@ const create_invaderBomb = (invader) => {
 const increase_score = () => {
     const scoreElement = gameInfo.querySelector('.score')
     if (scoreElement) {
-        scoreElement.textContent = `Score: ${finalResult.scores}`
-    }
+        scoreElement.innerHTML = `<img src="./img/score.png" alt="score-img" class="score-icon"> ${finalResult.scores}`
+       }
 }
 
 const eliminate_invader = (bomb) => {
