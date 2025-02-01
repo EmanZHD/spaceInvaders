@@ -8,12 +8,13 @@ import {
 import { create_invaders } from "./invaders.js"
 import { creat_popup } from './popup.js'
 
+const settings = document.querySelector('.settings')
 const canvas = document.querySelector('.canvas')
 const player = document.querySelector('.player')
 const invaders = document.querySelector('.invaders')
 const gameInfo = document.querySelector('.game-info')
 // const speedInvader = document.querySelector('.speed')
-const btn_pause = document.querySelector('.pause')
+// const btn_pause = document.querySelector('.pause')
 
 player.style.bottom = 0
 
@@ -43,6 +44,48 @@ document.addEventListener('keydown', e => {
         }
     }
 })
+
+const settings_game = () => {
+    const container_old = document.querySelector('.container')
+    if (container_old) {
+        console.log('0')
+        container_old.remove()
+        return
+    }
+    const container = document.createElement('div')
+    const heading_1st = document.createElement('span')
+    const list = document.createElement('p')
+    const cancel_btn = document.createElement('button')
+
+    container.classList.add('container')
+    heading_1st.classList.add('heading_1st')
+    list.classList.add('list')
+    cancel_btn.classList.add('cancel')
+
+    heading_1st.innerHTML = `Basic Rules of Space Invaders`
+    list.innerHTML = `<p style="font-size:10px">Objective:
+
+    Defeat all the invading aliens before they reach the bottom of the screen.
+
+    Score as many points as possible by shooting aliens and avoiding their attacks.
+Lives:
+
+    You start with a set number of lives (usually 3).
+
+    Losing all lives ends the game.
+    </p>`
+    cancel_btn.innerHTML = `❌`
+
+    container.append(cancel_btn)
+    container.append(heading_1st)
+    container.append(list)
+    // cancel_btn.addEventListener('click', location.reload())
+    canvas.append(container)
+
+}
+// const cancel = document.querySelector('.cancel')
+
+settings.addEventListener('click', settings_game)
 
 const timer = () => {
     const time = document.querySelector('.timer')
@@ -203,7 +246,7 @@ const move_invaderBomb = () => {
     })
 }
 
-const detect_limits = (invaders) =>{
+const detect_limits = (invaders) => {
     let left_Last_invader = Infinity
     let right_Last_invader = -Infinity
     let bottom_Last_invader = 0
@@ -220,34 +263,35 @@ const detect_limits = (invaders) =>{
         }
     })
     // console.log('------------------------| ', bottom_Last_invader)
-    return {left_Last_invader, right_Last_invader, bottom_Last_invader}
+    return { left_Last_invader, right_Last_invader, bottom_Last_invader }
 }
 
 const move_invader = () => {
     const invaders = document.querySelectorAll(`[class^="invader_"]`)
     const canvasRect = canvas.getBoundingClientRect()
 
-    const {left_Last_invader, right_Last_invader, bottom_Last_invader} = detect_limits(invaders)
-    switch (true){
-        case (player.getBoundingClientRect().top <= bottom_Last_invader) :
+    const { left_Last_invader, right_Last_invader, bottom_Last_invader } = detect_limits(invaders)
+    console.log(bottom_Last_invader, player.getBoundingClientRect().top)
+    switch (true) {
+        case (player.getBoundingClientRect().top <= bottom_Last_invader):
             finalResult.status = false
-                        shipParams.canShoot = false
-                        setTimeout(gameResult, 3000)
-                        return
+            shipParams.canShoot = false
+            setTimeout(gameResult, 3000)
+            return
         case (!invaderParams.reverse && right_Last_invader < canvasRect.right):
             invaderParams.moveX += invaderParams.speedX
-        break
+            break
         case (!invaderParams.reverse && right_Last_invader >= canvasRect.right):
             invaderParams.reverse = true
-        invaderParams.moveY += invaderParams.speedY
-        break
+            invaderParams.moveY += invaderParams.speedY
+            break
         case (invaderParams.reverse && left_Last_invader > canvasRect.left):
             invaderParams.moveX -= invaderParams.speedX
-        break
+            break
         case (invaderParams.reverse && left_Last_invader <= canvasRect.left):
             invaderParams.reverse = false
             invaderParams.moveY += invaderParams.speedY
-        break
+            break
     }
 
     if (!gameParams.pauseGame) {
@@ -299,7 +343,7 @@ const handle_pause = () => {
     }
 }
 
-btn_pause.addEventListener('click', () => handle_pause())
+// btn_pause.addEventListener('click', () => handle_pause())
 
 const init = () => {
     creat_popup('SPACE INVADERS', '', [

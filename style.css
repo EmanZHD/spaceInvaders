@@ -38,12 +38,6 @@ body {
 }
 
 .canvas {
-    /* width: 600px;
-    height: 680px;
-    background: url(./img/M8Go.gif);
-    position: relative;
-    border-radius: 5px;
-    overflow: hidden; */
     position: relative;
     width: 33%;
     height: 70%;
@@ -87,9 +81,6 @@ body {
 .invader_Pink,
 .invader_Blue,
 .invader_White {
-    /* width: 50px;
-    height: 35px;
-    margin: 15px; */
     width: 45px;
     height: 32px;
     margin: 5px;
@@ -111,17 +102,6 @@ body {
 }
 
 .game-info {
-    /* font-size: 20px;
-    margin-bottom: 10px;
-    width: 550px;
-    height: 50px;
-    background-color: #e6e6e6;
-    border-radius: 5px 5px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    color: #101020; */
     font-size: 100%;
     margin-bottom: 0.4%;
     width: 30%;
@@ -135,6 +115,9 @@ body {
     color: #101020;
 }
 
+.settings {
+    cursor: pointer;
+}
 
 .bomb {
     position: absolute;
@@ -142,8 +125,6 @@ body {
     height: 2%;
     /* top: 10px; */
     background: url('./img/bomb0.png') no-repeat;
-    /* background-color: red; */
-    /* margin-top: 2px; */
     margin: 21px;
     /* border-radius: 50%; */
 }
@@ -167,7 +148,7 @@ body {
     transition: width 0.5s ease;
 }
 
-.popup {
+.popup, .container {
     position: absolute;
     top: 0;
     left: 0;
@@ -180,14 +161,12 @@ body {
     z-index: 1000;
 }
 
+.container {
+    background: rgba(0, 0, 0);
+    display: inline;
+}
+
 .popup-content {
-    /* background: #3e3e3ec7;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.72);
-    max-width: 400px;
-    width: 90%; */
     background: #3e3e3ec7;
     padding: 3%;
     border-radius: 2%;
@@ -198,18 +177,12 @@ body {
 }
 
 .popup-title {
-    /* font-size: 24px;
-    color: #4bd32a;
-    margin-bottom: 10px; */
     font-size: 120%;
     color: #4bd32a;
     margin-bottom: 0%;
 }
 
 .popup-mssg {
-    /* font-size: 18px;
-    color: #fff;
-    margin-bottom: 20px; */
     font-size: 100%;
     color: #fff;
     margin: 4%;
@@ -222,16 +195,6 @@ body {
 }
 
 .popup-button {
-    /* font-family: "Galindo", serif;
-    font-weight: bolder;
-    font-size: 16px;
-    background-color: #4bd32a;
-    color: #101020;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; */
     font-family: "Galindo", serif;
     font-weight: bolder;
     font-size: 100%;
