@@ -48,57 +48,15 @@ document.addEventListener('keydown', e => {
     }
 })
 
-const settings_game = () => {
-    const container_old = document.querySelector('.container')
-    if (container_old) {
-        console.log('0')
-        container_old.remove()
-        return
-    }
-    const container = document.createElement('div')
-    const heading_1st = document.createElement('span')
-    const list = document.createElement('div')
-    const cancel_btn = document.createElement('button')
-
-    container.classList.add('container')
-    heading_1st.classList.add('heading_1st')
-    list.classList.add('list')
-    cancel_btn.classList.add('cancel')
-
-    heading_1st.innerHTML = `Basic Rules of Space Invaders`
-
-
-
-    list.innerHTML = `
-<h2>Objective : </h2>
-<ul>
-<li>Defeat all the invading aliens before they reach the bottom of the screen.</li>
-<li>Score as many points as possible by shooting aliens and avoiding their attacks.</li>
-</ul>
-
-<h2>Lives : </h2>
-<ul>
-<li>You start with a set number of lives (usually 3).</li>
-<li>Losing all lives ends the game.</li>
-</ul>
-`
-    cancel_btn.innerHTML = `❌`
-
-    container.append(cancel_btn)
-    container.append(heading_1st)
-    container.append(list)
-    // cancel_btn.addEventListener('click', location.reload())
-    canvas.append(container)
-
-}
-// const cancel = document.querySelector('.cancel')
-
 settings.addEventListener('click', () => {
+    canvas.classList.add('blur')
     instruction.classList.toggle('show')
 
 })
 
-cancelInstruction.onclick = () => instruction.classList.remove('show')
+cancelInstruction.onclick = () => {
+    canvas.classList.remove('blur')
+    instruction.classList.remove('show')}
 
 const timer = () => {
     const time = document.querySelector('.timer')
@@ -315,6 +273,7 @@ const move_invader = () => {
 }
 
 const game_continue = () => {
+    canvas.classList.remove('blur')
     gameParams.pauseGame = false
     shipParams.canShoot = true
     const pause_card = document.querySelector('.popup')
@@ -325,6 +284,7 @@ const game_continue = () => {
 
 const middle = () => {
     if (gameParams.current_time === 10) {
+        canvas.classList.add('blur')
         creat_popup('caution', 'Less than 10 seconds remaining', [])
         gameParams.pauseGame = true
         setTimeout(() => {
@@ -332,11 +292,13 @@ const middle = () => {
             pauseCard.remove()
             gameParams.pauseGame = false
             gameParams.current_time += 2
+            canvas.classList.remove('blur')
         }, 2000)
     }
 }
 
 const display_pause = () => {
+    canvas.classList.add('blur')
     creat_popup(
         'Pause',
         'The game is paused',

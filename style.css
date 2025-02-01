@@ -174,7 +174,7 @@ body {
 
 .popup-content {
     background: #3e3e3ec7;
-    padding: 3%;
+    padding: 1%;
     border-radius: 2%;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.72);
@@ -218,7 +218,7 @@ body {
 }
 
 
-.instruction {
+/* .instruction {
     font-family: monospace;
     display: none;
     background: #84849c;
@@ -232,6 +232,25 @@ body {
     position: absolute;
     z-index: 3;
     padding: 9px;
+} */
+.instruction {
+    font-family: monospace;
+    display: none;
+    background: #84849c;
+    width: 80%; /* Default width for smaller screens */
+    max-width: 500px; /* Maximum width for larger screens */
+    height: auto; /* Adjust height based on content */
+    max-height: 80vh; /* Prevent the popup from being too tall */
+    margin: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    position: absolute;
+    z-index: 3;
+    padding: 20px; /* Add some padding */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+    overflow-y: auto; /* Add scroll if content overflows */
 }
 
 .instruction li {
@@ -300,4 +319,9 @@ key {
     font-family: monospace;
     font-size: 0.9em;
     color: #333;
+}
+
+.blur {
+    filter: blur(5px); /* Adjust the blur intensity as needed */
+    transition: filter 0.3s ease; /* Smooth transition */
 }

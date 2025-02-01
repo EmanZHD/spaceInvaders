@@ -37,6 +37,6 @@ export const creat_popup = (title, mssg, btns) => {
     }
 
     popup.append(content_popup)
-    canvas.append(popup)
+    document.body.append(popup)
     return popup
 }
