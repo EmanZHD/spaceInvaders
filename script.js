@@ -9,6 +9,9 @@ import { create_invaders } from "./invaders.js"
 import { creat_popup } from './popup.js'
 
 const settings = document.querySelector('.settings')
+const instruction = document.querySelector('.instruction')
+const cancelInstruction = document.querySelector('.cancel-instruction')
+
 const canvas = document.querySelector('.canvas')
 const player = document.querySelector('.player')
 const invaders = document.querySelector('.invaders')
@@ -54,7 +57,7 @@ const settings_game = () => {
     }
     const container = document.createElement('div')
     const heading_1st = document.createElement('span')
-    const list = document.createElement('p')
+    const list = document.createElement('div')
     const cancel_btn = document.createElement('button')
 
     container.classList.add('container')
@@ -63,17 +66,22 @@ const settings_game = () => {
     cancel_btn.classList.add('cancel')
 
     heading_1st.innerHTML = `Basic Rules of Space Invaders`
-    list.innerHTML = `<p style="font-size:10px">Objective:
 
-    Defeat all the invading aliens before they reach the bottom of the screen.
 
-    Score as many points as possible by shooting aliens and avoiding their attacks.
-Lives:
 
-    You start with a set number of lives (usually 3).
+    list.innerHTML = `
+<h2>Objective : </h2>
+<ul>
+<li>Defeat all the invading aliens before they reach the bottom of the screen.</li>
+<li>Score as many points as possible by shooting aliens and avoiding their attacks.</li>
+</ul>
 
-    Losing all lives ends the game.
-    </p>`
+<h2>Lives : </h2>
+<ul>
+<li>You start with a set number of lives (usually 3).</li>
+<li>Losing all lives ends the game.</li>
+</ul>
+`
     cancel_btn.innerHTML = `❌`
 
     container.append(cancel_btn)
@@ -85,7 +93,12 @@ Lives:
 }
 // const cancel = document.querySelector('.cancel')
 
-settings.addEventListener('click', settings_game)
+settings.addEventListener('click', () => {
+    instruction.classList.toggle('show')
+
+})
+
+cancelInstruction.onclick = () => instruction.classList.remove('show')
 
 const timer = () => {
     const time = document.querySelector('.timer')

@@ -39,7 +39,8 @@ body {
 
 .canvas {
     position: relative;
-    width: 33%;
+    /* width: 33%; */
+    width: 620px;
     height: 70%;
     background: url(./img/M8Go.gif);
     border-radius: 1%;
@@ -48,8 +49,8 @@ body {
 
 .player {
     position: absolute;
-    width: 13%;
-    height: 23%;
+    width: 60px;
+    height: 100px;
     /* background-color: yellow; */
     /* top: 84%; */
     background: url('./img/space_shipPk.png') no-repeat;
@@ -104,7 +105,7 @@ body {
 .game-info {
     font-size: 100%;
     margin-bottom: 0.4%;
-    width: 30%;
+    width: 610px;
     height: 5%;
     background-color: #e6e6e6;
     border-radius: 5px 5px 0 0;
@@ -113,6 +114,7 @@ body {
     align-items: center;
     padding: 0% 1.3%;
     color: #101020;
+    box-sizing: border-box;
 }
 
 .settings {
@@ -148,7 +150,8 @@ body {
     transition: width 0.5s ease;
 }
 
-.popup, .container {
+.popup,
+.container {
     position: absolute;
     top: 0;
     left: 0;
@@ -158,12 +161,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-}
-
-.container {
-    background: rgba(0, 0, 0);
-    display: inline;
+    z-index: 2;
 }
 
 .popup-content {
@@ -209,4 +207,77 @@ body {
 
 .popup-button:hover {
     background-color: #3aa822;
+}
+
+
+.instruction {
+    display: none;
+    background: rgb(118, 83, 83);
+    width: 80%;
+    height: 50vh;
+    margin: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    position: absolute;
+    z-index: 3;
+    padding: 10px;
+}
+
+.instruction li {
+    font-size: 10px;
+}
+
+.instruction h2 {
+    font-size: 16px;
+}
+
+.show {
+    display: block;
+}
+
+.instruction>div:nth-of-type(1) {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.instruction button {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+@media screen and (max-width:650px) {
+    .canvas {
+        width: 450px;
+    }
+
+    .game-info {
+        width: 400px;
+
+
+    }
+    .all_btns{
+flex-direction: column;
+    }
+    .all_btns button{
+margin: 5px 0;
+    }
+}
+
+@media screen and (max-width:460px) {
+    .canvas {
+        width: 350px;
+    }
+
+    .game-info {
+        width: 300px;
+
+    }
 }
