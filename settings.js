@@ -3,7 +3,7 @@ export const invaderParams = {
     moveX: 0,
     moveY: 0,
     reverse: false,
-    speedX: 1,
+    speedX: 4,
     speedY: 20,
     bombs: [],
 }

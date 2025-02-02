@@ -1,3 +1,9 @@
+import { finalResult, gameParams } from "./settings.js"
+import { creat_popup } from "./popup.js"
+
+const time = document.querySelector('.timer')
+time.innerHTML = `00:20` 
+
 export function getPlayerXRelativeToCanvas(player, canvas) {
     const playerRect = player.getBoundingClientRect()
     const canvasRect = canvas.getBoundingClientRect()
@@ -16,6 +22,24 @@ export const collision_invaderBomb = (bullet, invader) => {
         bulletRect.left > invaderRect.right
     return !(collision)
 }
+export const collision_shipBomb = (bomb, player) => {
+        const bombRect = bomb.getBoundingClientRect()
+        const playerRect = player.getBoundingClientRect()
+        return !(
+            bombRect.bottom < playerRect.top ||
+            bombRect.top > playerRect.bottom ||
+            bombRect.right < playerRect.left ||
+            bombRect.left > playerRect.right
+        )
+    }
+
+export const increase_score = () => {
+    const gameInfo = document.querySelector('.game-info')
+    const scoreElement = gameInfo.querySelector('.score')
+    if (scoreElement) {
+        scoreElement.innerHTML = `<img src="./img/score.png" alt="score-img" class="score-icon"> ${finalResult.scores}`
+       }
+}
 
 export const decrease_lives = (livesValue) => {
     const gameInfo = document.querySelector('.game-info')
@@ -33,4 +57,40 @@ export const getRandomNums = (max, count) => {
         randomNumbers.push(randomNumber)
     }
     return Array.from(new Set(randomNumbers))
+}
+
+export const gameResult = () => {
+    const Total_invaders = document.querySelectorAll('[class^="invader_"]').length
+    if (!finalResult.status || Total_invaders === 0) {
+        gameParams.pauseGame = true
+        // canvas.innerHTML = ''
+        let title = Total_invaders === 0 ? `<img src='./img/win.png'>` : `<img src='./img/defeat3.png'>`
+        let moreInfo = `<img src="./img/score.png" alt="score-img" class="score-icon"> ${finalResult.scores}<br>${finalResult.finalTime}`
+        creat_popup(title, moreInfo, [
+            { text: '<i class="fa-solid fa-rotate-right"></i>', action: () => location.reload() }
+        ])
+    }
+}
+
+export const timer = () => {
+    gameParams.current_sec = +(time.textContent.split(':')[1])
+    gameParams.current_min = +(time.textContent.split(':')[0])
+    if (gameParams.current_sec === 0 && gameParams.current_min === 0) {
+        shipParams.canShoot = false
+        gameParams.pauseGame = true
+        finalResult.status = false
+        setTimeout(gameResult, 3000)
+    }
+    if (!gameParams.pauseGame) {
+        if (gameParams.current_sec === 0) {
+            if (gameParams.current_min > 0) {
+                gameParams.current_min--
+                gameParams.current_sec = 59
+            }
+        } else {
+            gameParams.current_sec--
+        }
+    }
+    finalResult.finalTime = `${String(gameParams.current_min).padStart(2, '0')}:${String(gameParams.current_sec).padStart(2, '0')}`
+    time.innerHTML = `${String(gameParams.current_min).padStart(2, '0')}:${String(gameParams.current_sec).padStart(2, '0')}`
 }
