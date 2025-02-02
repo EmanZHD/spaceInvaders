@@ -69,8 +69,12 @@ if (canvas.classList.contains('blur')){
 })
 
 cancelInstruction.onclick = () => {
-    gameParams.pauseGame = false
-    shipParams.canShoot = true
+    const popupDiv = document.querySelector('body .popup');
+
+    if (!popupDiv){
+        gameParams.pauseGame = false
+        shipParams.canShoot = true
+    }
     canvas.classList.remove('blur')
     instruction.classList.remove('show')
 }
