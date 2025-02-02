@@ -178,8 +178,8 @@ body {
     border-radius: 2%;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.72);
-    max-width: 400px;
-    width: 50%;
+    max-width: 200px;
+    width: 19%;
 }
 
 .popup-title {
@@ -192,6 +192,11 @@ body {
     font-size: 100%;
     color: #fff;
     margin: 4%;
+}
+.popup-mssg img{
+    vertical-align: middle;
+    width: 25px;
+    /* height: auto; */
 }
 
 .all_btns {
@@ -214,33 +219,18 @@ body {
 }
 
 .popup-button:hover {
-    background-color: #3aa822;
+    background-color: #101020;
+    color: #4bd32a;
 }
 
-
-/* .instruction {
-    font-family: monospace;
-    display: none;
-    background: #84849c;
-        width: 50%;
-    height: auto;
-    margin: auto;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 20px;
-    position: absolute;
-    z-index: 3;
-    padding: 9px;
-} */
 .instruction {
     font-family: monospace;
     display: none;
     background: #84849c;
-    width: 80%; /* Default width for smaller screens */
-    max-width: 500px; /* Maximum width for larger screens */
-    height: auto; /* Adjust height based on content */
-    max-height: 80vh; /* Prevent the popup from being too tall */
+    width: 80%;
+    max-width: 500px; 
+    height: auto;
+    max-height: 80vh; 
     margin: auto;
     left: 50%;
     top: 50%;
@@ -248,9 +238,9 @@ body {
     border-radius: 20px;
     position: absolute;
     z-index: 3;
-    padding: 20px; /* Add some padding */
-    box-sizing: border-box; /* Include padding in width/height calculations */
-    overflow-y: auto; /* Add scroll if content overflows */
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .instruction li {
@@ -322,6 +312,10 @@ key {
 }
 
 .blur {
-    filter: blur(5px); /* Adjust the blur intensity as needed */
-    transition: filter 0.3s ease; /* Smooth transition */
+    filter: blur(2px); 
+    transition: filter 0.3s ease;
+}
+
+.fa {
+    color: #ff5733; /* Orange color for all solid Font Awesome icons */
 }

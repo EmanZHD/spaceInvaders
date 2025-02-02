@@ -49,14 +49,14 @@ document.addEventListener('keydown', e => {
 })
 
 settings.addEventListener('click', () => {
-    canvas.classList.add('blur')
+    canvas.classList.toggle('blur')
     instruction.classList.toggle('show')
-
 })
 
 cancelInstruction.onclick = () => {
     canvas.classList.remove('blur')
-    instruction.classList.remove('show')}
+    instruction.classList.remove('show')
+}
 
 const timer = () => {
     const time = document.querySelector('.timer')
@@ -81,11 +81,10 @@ const gameResult = () => {
     if (!finalResult.status || Total_invaders === 0) {
         gameParams.pauseGame = true
         // canvas.innerHTML = ''
-        let title = Total_invaders === 0 ? finalResult.safe : finalResult.fail
-        let moreInfo = `score: ${finalResult.scores}
-        ${finalResult.finalTime}`
+        let title = Total_invaders === 0 ? `<img src='./img/vectory.png'>` : `<img src='./img/defeat1.png'>`
+        let moreInfo = `<img src="./img/score.png" alt="score-img" class="score-icon"> ${finalResult.scores}<br>${finalResult.finalTime}`
         creat_popup(title, moreInfo, [
-            { text: 'restart', action: () => location.reload() }
+            { text: '<i class="fa-solid fa-rotate-right"></i>', action: () => location.reload() }
         ])
     }
 }
@@ -285,7 +284,7 @@ const game_continue = () => {
 const middle = () => {
     if (gameParams.current_time === 10) {
         canvas.classList.add('blur')
-        creat_popup('caution', 'Less than 10 seconds remaining', [])
+        creat_popup('<i class="fa-solid fa-circle-exclamation" style="color: red"></i>', 'Less than 10 seconds remaining', [])
         gameParams.pauseGame = true
         setTimeout(() => {
             const pauseCard = document.querySelector('.popup')
@@ -300,11 +299,11 @@ const middle = () => {
 const display_pause = () => {
     canvas.classList.add('blur')
     creat_popup(
-        'Pause',
+        '<i class="fa-solid fa-pause" style="color: white"></i> Pause',
         'The game is paused',
         [
-            { text: 'continue', action: () => game_continue() },
-            { text: 'restart', action: () => location.reload() }
+            { text: '<i class="fa-solid fa-left-long"></i>', action: () => game_continue() },
+            { text: '<i class="fa-solid fa-rotate-right"></i>', action: () => location.reload() }
         ]
     )
 }
@@ -322,7 +321,7 @@ const handle_pause = () => {
 
 const init = () => {
     creat_popup('SPACE INVADERS', '', [
-        { text: 'start now', action: () => handle_start() }
+        { text: '<i class="fa-regular fa-circle-play" ></i> play', action: () => handle_start() }
     ])
 }
 
