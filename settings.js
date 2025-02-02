@@ -6,8 +6,6 @@ export const invaderParams = {
     speedX: 1,
     speedY: 20,
     bombs: [],
-    // left_Last_invader : Infinity,
-    // right_Last_invader : -Infinity
 }
 
 export const shipParams = {
@@ -30,7 +28,8 @@ export const gameParams = {
     pauseGame: false,
     progress: 100,
     keys: {},
-    current_time: 0
+    current_sec: 0,
+    current_min: 0
 }
 
 export const imageSrc = [

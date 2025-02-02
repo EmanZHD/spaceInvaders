@@ -16,6 +16,8 @@ const canvas = document.querySelector('.canvas')
 const player = document.querySelector('.player')
 const invaders = document.querySelector('.invaders')
 const gameInfo = document.querySelector('.game-info')
+const time = document.querySelector('.timer')
+time.innerHTML = `00:20`
 // const speedInvader = document.querySelector('.speed')
 // const btn_pause = document.querySelector('.pause')
 
@@ -49,29 +51,53 @@ document.addEventListener('keydown', e => {
 })
 
 settings.addEventListener('click', () => {
+    const canvas = document.querySelector('.canvas')
+    const popupDiv = document.querySelector('body .popup');
+        // console.log(popupDiv)
+    if (!popupDiv){
+if (canvas.classList.contains('blur')){
+        gameParams.pauseGame = false
+        shipParams.canShoot = true
+    }else{
+        gameParams.pauseGame = true
+        shipParams.canShoot = false
+    }
+    }
+    
     canvas.classList.toggle('blur')
     instruction.classList.toggle('show')
 })
 
 cancelInstruction.onclick = () => {
+    gameParams.pauseGame = false
+    shipParams.canShoot = true
     canvas.classList.remove('blur')
     instruction.classList.remove('show')
 }
 
+
+
 const timer = () => {
-    const time = document.querySelector('.timer')
-    gameParams.current_time = +(time.textContent.split(':')[1])
-    if (gameParams.current_time === 0) {
+    gameParams.current_sec = +(time.textContent.split(':')[1])
+    gameParams.current_min = +(time.textContent.split(':')[0])
+    if (gameParams.current_sec === 0 && gameParams.current_min === 0) {
         shipParams.canShoot = false
         gameParams.pauseGame = true
         finalResult.status = false
         setTimeout(gameResult, 3000)
     }
-    if (gameParams.current_time !== 0 && !gameParams.pauseGame) {
-        gameParams.current_time--
+    if (!gameParams.pauseGame) {
+        if (gameParams.current_sec === 0) {
+            if (gameParams.current_min > 0) {
+                gameParams.current_min--
+                gameParams.current_sec = 59
+            }
+        } else {
+            gameParams.current_sec--
+        }
     }
-    finalResult.finalTime = `00:${String(gameParams.current_time).padStart(2, '0')}`
-    time.innerHTML = `00:${String(gameParams.current_time).padStart(2, '0')}`
+    finalResult.finalTime = `${String(gameParams.current_min).padStart(2, '0')}:${String(gameParams.current_sec).padStart(2, '0')}`
+    time.innerHTML = `${String(gameParams.current_min).padStart(2, '0')}:${String(gameParams.current_sec).padStart(2, '0')}`
 }
 
 setInterval(timer, 1000)
@@ -282,7 +308,7 @@ const game_continue = () => {
 }
 
 const middle = () => {
-    if (gameParams.current_time === 10) {
+    if (gameParams.current_min === 0 && gameParams.current_sec === 10) {
         canvas.classList.add('blur')
         creat_popup('<i class="fa-solid fa-triangle-exclamation"  style="color: red"></i>', 'Less than 10 seconds remaining', [])
         gameParams.pauseGame = true
@@ -290,7 +316,7 @@ const middle = () => {
             const pauseCard = document.querySelector('.popup')
             pauseCard.remove()
             gameParams.pauseGame = false
-            gameParams.current_time += 2
+            gameParams.current_sec += 2
             canvas.classList.remove('blur')
         }, 2000)
     }
@@ -329,6 +355,7 @@ const handle_start = () => {
     start_card.remove()
     gameParams.pauseGame = false
     shipParams.canShoot = true
+    gameParams.start = 1
 }
 
 const gameLoop = () => {

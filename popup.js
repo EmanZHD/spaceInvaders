@@ -1,5 +1,5 @@
+
 export const creat_popup = (title, mssg, btns) => {
-    const canvas = document.querySelector('.canvas')
     const last_popup = document.querySelector('.popup')
 
     if (last_popup !== null) {
