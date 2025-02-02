@@ -316,6 +316,7 @@ key {
     transition: filter 0.3s ease;
 }
 
-.fa {
-    color: #ff5733; /* Orange color for all solid Font Awesome icons */
+
+li {
+    margin-top: 10px;
 }

@@ -1,4 +1,4 @@
-import { gameParams, shipParams, invaderParams, finalResult } from './settings.js'
+import { gameParams, shipParams, invaderParams, finalResult, imagHTML } from './settings.js'
 
 import {
     getPlayerXRelativeToCanvas, roundNum,
@@ -81,7 +81,7 @@ const gameResult = () => {
     if (!finalResult.status || Total_invaders === 0) {
         gameParams.pauseGame = true
         // canvas.innerHTML = ''
-        let title = Total_invaders === 0 ? `<img src='./img/vectory.png'>` : `<img src='./img/defeat1.png'>`
+        let title = Total_invaders === 0 ? `<img src='./img/win.png'>` : `<img src='./img/defeat3.png'>`
         let moreInfo = `<img src="./img/score.png" alt="score-img" class="score-icon"> ${finalResult.scores}<br>${finalResult.finalTime}`
         creat_popup(title, moreInfo, [
             { text: '<i class="fa-solid fa-rotate-right"></i>', action: () => location.reload() }
@@ -284,7 +284,7 @@ const game_continue = () => {
 const middle = () => {
     if (gameParams.current_time === 10) {
         canvas.classList.add('blur')
-        creat_popup('<i class="fa-solid fa-circle-exclamation" style="color: red"></i>', 'Less than 10 seconds remaining', [])
+        creat_popup('<i class="fa-solid fa-triangle-exclamation"  style="color: red"></i>', 'Less than 10 seconds remaining', [])
         gameParams.pauseGame = true
         setTimeout(() => {
             const pauseCard = document.querySelector('.popup')
@@ -317,10 +317,8 @@ const handle_pause = () => {
     }
 }
 
-// btn_pause.addEventListener('click', () => handle_pause())
-
 const init = () => {
-    creat_popup('SPACE INVADERS', '', [
+    creat_popup(imagHTML, '', [
         { text: '<i class="fa-regular fa-circle-play" ></i> play', action: () => handle_start() }
     ])
 }

@@ -32,3 +32,10 @@ export const gameParams = {
     keys: {},
     current_time: 0
 }
+
+export const imageSrc = [
+    './img/blueAlien0.png',
+    './img/alien1.png',
+    './img/pinkAlien0.png'
+]
+export const imagHTML = imageSrc.map(src => `<img src="${src}" alt="logo">`).join('')
