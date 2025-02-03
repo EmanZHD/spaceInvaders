@@ -1,4 +1,4 @@
-import { gameParams,shipParams } from "./settings.js"
+import { gameParams, shipParams } from "./settings.js"
 import { getPlayerXRelativeToCanvas } from "./utils.js"
 import { eliminate_invader } from "./invaders.js"
 

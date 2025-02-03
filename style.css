@@ -118,21 +118,21 @@ body {
 }
 
 .score img {
-    vertical-align: middle; 
+    vertical-align: middle;
     width: 29px;
-    height: auto; 
+    height: auto;
 }
 
 .settings {
-    z-index: 1000; 
+    z-index: 1000;
     position: relative;
 }
 
 .settings i {
     cursor: pointer;
-    font-size: 24px; 
+    font-size: 24px;
     color: black;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .bomb {
@@ -189,8 +189,8 @@ body {
 }
 
 .popup-title {
-    font-size: 120%;
-    color:  var(--green);
+    font-size: 1px;
+    color: var(--green);
     margin-bottom: 0%;
 }
 
@@ -199,7 +199,8 @@ body {
     color: #fff;
     margin: 4%;
 }
-.popup-mssg img{
+
+.popup-mssg img {
     vertical-align: middle;
     width: 25px;
     /* height: auto; */
@@ -234,9 +235,9 @@ body {
     display: none;
     background: #84849c;
     width: 80%;
-    max-width: 500px; 
+    max-width: 500px;
     height: auto;
-    max-height: 80vh; 
+    max-height: 80vh;
     margin: auto;
     left: 50%;
     top: 50%;
@@ -285,11 +286,13 @@ body {
     .game-info {
         width: 400px;
     }
-    .all_btns{
-flex-direction: column;
+
+    .all_btns {
+        flex-direction: column;
     }
-    .all_btns button{
-margin: 5px 0;
+
+    .all_btns button {
+        margin: 5px 0;
     }
 }
 
@@ -301,15 +304,13 @@ margin: 5px 0;
     .game-info {
         width: 300px;
     }
-    .popup-title img{
+
+    .popup-title img {
         width: 20px;
-       }
+    }
 }
-@media screen and (max-width:1022px) {
-   .popup-title img{
-    width: 100px;
-   }
-}
+
+
 key {
     background-color: #f7f7f7;
     border: 1px solid #ccc;
@@ -322,7 +323,7 @@ key {
 }
 
 .blur {
-    filter: blur(2px); 
+    filter: blur(2px);
     transition: filter 0.3s ease;
 }
 

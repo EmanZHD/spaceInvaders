@@ -4,10 +4,17 @@ import {
     getPlayerXRelativeToCanvas, decrease_lives, timer
 } from './utils.js'
 
-import { create_invaders,
-    danger_invaders, move_invader, move_invaderBomb } from "./invaders.js"
-import {handle_pause, middle,init } from './popup.js'
-import { move_player,create_shipBomb,move_shipBomb } from './player.js'
+import {
+    create_invaders, danger_invaders,
+    move_invader, move_invaderBomb
+} from "./invaders.js"
+
+import { handle_pause, middle, init } from './popup.js'
+
+import {
+    move_player, create_shipBomb,
+    move_shipBomb
+} from './player.js'
 
 const settings = document.querySelector('.settings')
 const instruction = document.querySelector('.instruction')
@@ -46,25 +53,25 @@ document.addEventListener('keydown', e => {
 
 settings.addEventListener('click', () => {
     const canvas = document.querySelector('.canvas')
-    const popupDiv = document.querySelector('body .popup');
-        // console.log(popupDiv)
-    if (!popupDiv){
-if (canvas.classList.contains('blur')){
-        gameParams.pauseGame = false
-        shipParams.canShoot = true
-    }else{
-        gameParams.pauseGame = true
-        shipParams.canShoot = false
+    const popupDiv = document.querySelector('body .popup')
+    // console.log(popupDiv)
+    if (!popupDiv) {
+        if (canvas.classList.contains('blur')) {
+            gameParams.pauseGame = false
+            shipParams.canShoot = true
+        } else {
+            gameParams.pauseGame = true
+            shipParams.canShoot = false
+        }
     }
-    }
-    
+
     canvas.classList.toggle('blur')
     instruction.classList.toggle('show')
 })
 
 cancelInstruction.onclick = () => {
     const popupDiv = document.querySelector('body .popup')
-    if (!popupDiv){
+    if (!popupDiv) {
         gameParams.pauseGame = false
         shipParams.canShoot = true
     }

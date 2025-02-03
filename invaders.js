@@ -1,17 +1,21 @@
-import { gameParams,invaderParams,
-     shipParams, finalResult } from "./settings.js"
-import { getRandomNums, collision_invaderBomb,
-     increase_score, gameResult,collision_shipBomb,decrease_lives } from "./utils.js"
+import {
+    gameParams, invaderParams,
+    shipParams, finalResult
+} from "./settings.js"
+import {
+    getRandomNums, collision_invaderBomb,
+    increase_score, gameResult, collision_shipBomb, decrease_lives
+} from "./utils.js"
 
-     
-     export const pointsMap = [
-         0, 0, 0, 0, 0, 0,
-         1, 1, 1, 1, 1, 1,
-         2, 2, 2, 2, 2, 2
-        ]
-        const player = document.querySelector('.player')
-        const canvas = document.querySelector('.canvas')
-        const invaders = document.querySelector('.invaders')
+
+export const pointsMap = [
+    0, 0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1, 1,
+    2, 2, 2, 2, 2, 2
+]
+const player = document.querySelector('.player')
+const canvas = document.querySelector('.canvas')
+const invaders = document.querySelector('.invaders')
 
 export const create_invaders = () => {
     const invadersinLine = 6
@@ -65,20 +69,20 @@ export const danger_invaders = () => {
     })
 }
 export const eliminate_invader = (bomb) => {
-        const invadersList = document.querySelectorAll('[class^="invader_"]')
-        // console.log('==| ', )
-        invadersList.forEach(invader => {
-            if (collision_invaderBomb(bomb, invader)) {
-                invader.remove()
-                invaderParams.invaderAmount--
-                finalResult.scores += 10
-                bomb.remove()
-                shipParams.bombs = shipParams.bombs.filter(b => b !== bomb)
-                increase_score()
-                setTimeout(gameResult, 3000)
-            }
-        })
-    }
+    const invadersList = document.querySelectorAll('[class^="invader_"]')
+    // console.log('==| ', )
+    invadersList.forEach(invader => {
+        if (collision_invaderBomb(bomb, invader)) {
+            invader.remove()
+            invaderParams.invaderAmount--
+            finalResult.scores += 10
+            bomb.remove()
+            shipParams.bombs = shipParams.bombs.filter(b => b !== bomb)
+            increase_score()
+            setTimeout(gameResult, 3000)
+        }
+    })
+}
 
 export const detect_limits = (invaders) => {
     let left_Last_invader = Infinity

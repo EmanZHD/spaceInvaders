@@ -1,8 +1,8 @@
-import { finalResult, gameParams } from "./settings.js"
+import { finalResult, gameParams,shipParams } from "./settings.js"
 import { creat_popup } from "./popup.js"
 
 const time = document.querySelector('.timer')
-time.innerHTML = `00:20` 
+time.innerHTML = `00:30` 
 
 export function getPlayerXRelativeToCanvas(player, canvas) {
     const playerRect = player.getBoundingClientRect()

@@ -1,4 +1,4 @@
-import { gameParams,shipParams,imagHTML } from "./settings.js"
+import { gameParams, shipParams, imagHTML } from "./settings.js"
 const canvas = document.querySelector('.canvas')
 
 export const creat_popup = (title, mssg, btns) => {
