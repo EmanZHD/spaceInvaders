@@ -1,5 +1,5 @@
-const moveEnimiesX = 8
-const moveEnimiesY = 10
+const moveEnimiesX = 4
+const moveEnimiesY = 8
 const movePlayerSpeed = 6
 const bulletSpeed = 6
 
@@ -26,6 +26,8 @@ const startBtn = startPopup.querySelector('button')
 
 //pause Popup
 const pausePopup = document.querySelector('.pause-popup')
+const updatePopup = document.querySelector('.update-popup')
+const continueBtn = updatePopup.querySelector('.update-popup button')
 const pauseRestartBtn = pausePopup.querySelector('button:nth-of-type(1)')
 const pauseResumeBtn = pausePopup.querySelector('button:nth-of-type(2)')
 
@@ -44,6 +46,14 @@ pauseResumeBtn.onclick = () => {
     enemiesShooting()
     document.body.classList.add('playing')
     document.body.classList.remove('paused')
+}
+
+continueBtn.onclick = () => {
+    gameSetting.canShoot = true
+    document.body.classList.remove('update')
+    document.body.classList.add('playing')
+    playing = true
+    gameLoop()
 }
 
 pauseRestartBtn.onclick = () => restartGAME()
@@ -445,10 +455,11 @@ function updateFPS() {
     fpsDisplay.textContent = `${fps}`;
 }
 
+
 ///to remove the setInterval
 function gameLoop() {
-
-    if (!isGameOver) {
+    console.log('=======satrt', Score)
+    if (!isGameOver && playing) {
         counter++
         if (counter == 60) {
             handleCountDown()
@@ -463,6 +474,10 @@ function gameLoop() {
         moveInvadersBullet()
         moveEnimieContainer()
         checkForCollision_player_enimie()
+        if (Score === 50){
+            gameUpdate()
+        }
+
         REQID = requestAnimationFrame(gameLoop)
     }
 
@@ -501,7 +516,6 @@ function init() {
         elem.classList.remove('heartbeat')
     )
     if (playing) {
-
         requestAnimationFrame(gameLoop);
     }
 }
@@ -548,10 +562,20 @@ function gameOver(calledFrom) {
     isGameOver = true
     restartScore.textContent = Score + "."
     document.body.classList.add('over')
-    document.querySelector('.restart-popup p').textContent = calledFrom
+    document.querySelector('.restart-popup .livesKFC').textContent = calledFrom
 
 
 }
+
+const gameUpdate = () => {
+    if (playing) {
+        gameSetting.canShoot = false
+        document.body.classList.add('update')
+        cancelAnimationFrame(REQID)
+        playing = false
+    }
+}
+
 
 function gameWin() {
     isGameOver = true

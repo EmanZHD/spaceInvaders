@@ -176,12 +176,20 @@ body {
     font-family: "Jersey 20", sans-serif; 
 }
 
-.popup h1,
-.popup p {
+.popup h1 {
     margin: 0;
-    font-size: 2.5rem;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
     letter-spacing: 2px;
-    text-shadow: 0 3px 0px red, 0 -3px 0px aqua;
+    text-shadow: 0 3px 0px red, 0 -3px 0px #fff;
+}
+.popup p{
+    margin: 0;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: #fff;
+    margin-top: 20px;
+    white-space: pre-line;
 }
 
 .popup button {
@@ -197,7 +205,7 @@ body {
     text-transform: uppercase;
     border: 2px solid var(--col2);
     background: rgba(71, 60, 200, 0.2);
-    text-shadow: 0 2px 0px red, 0 -2px 0px aqua;
+    text-shadow: 0 2px 0px red, 0 -2px 0px #fff;
     box-shadow: 0 0 7px #d10f36 inset, 0 0 7px 2px var(--col1);
 }
 
@@ -237,6 +245,16 @@ body {
 
 .paused .canvas,
 .paused .options {
+    filter: blur(4px);
+}
+
+.update .update-popup {
+    display: block;
+}
+
+
+.update .canvas,
+.update .options {
     filter: blur(4px);
 }
 
