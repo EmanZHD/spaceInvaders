@@ -1,332 +1,294 @@
-@import url('https://fonts.googleapis.com/css2?family=Galindo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jersey+20&family=Pixelify+Sans:wght@400..700&display=swap');
 
 :root {
-    --dark_: #000000;
-    --dark: #101020b0;
-    --green: #4bd32a;
-}
+    --dark: #101020;
+    --light: #eee;
+    --col1: #f2b106;
+    --col2: #09fff4;
+    --col3: crimson;
+    --pop-shadow: 0 0 7px var(--col3), 0 0 7px var(--col2) inset;
 
-.invader_Pink {
-    --_1stImg: url('./img/pinkAlien0.png');
-    --_2ndImg: url('./img/pinkAlien1.png');
 }
-
-.invader_Blue {
-    --_1stImg: url('./img/blueAlien0.png');
-    --_2ndImg: url('./img/blueAlien1.png');
-}
-
-.invader_White {
-    --_1stImg: url('./img/alien0.png');
-    --_2ndImg: url('./img/alien1.png');
+ 
+svg {
+    width: 20px;
 }
 
 body {
-    font-family: "Galindo", serif;
-    font-weight: bolder;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    color: #fff;  
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* flex-wrap: wrap; */
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    background-color: var(--dark);
+    background-image: url('./imgs/1.webp') ;
+    background-color: var(--light);
 }
 
 .canvas {
+    width: 500px;
+    height: 670px;
+    background-color: #2f2f68;
     position: relative;
-    /* width: 33%; */
-    width: 620px;
-    height: 70%;
-    background: url(./img/M8Go.gif);
-    border-radius: 1%;
+    border-radius: 10px;
     overflow: hidden;
+    background-image: url('./imgs/1.webp');
+    box-shadow: 0 0 15px 0px #ac7063;
+    filter: blur(4px);
 }
 
 .player {
-    position: absolute;
     width: 60px;
-    height: 100px;
-    /* background-color: yellow; */
-    /* top: 84%; */
-    background: url('./img/space_shipPk.png') no-repeat;
-    background-size: auto;
+    height: 55px;
+    top: 600px;
+    position: absolute;
+    background-image: url('./imgs/p0.webp');
     background-size: cover;
+    /* left: 220px; */
+    will-change: transform;
 }
 
 .pause {
     animation-play-state: paused;
 }
 
-.ship_Bomb {
+.bullet {
+    width: 8px;
+    height: 20px;
     position: absolute;
-    width: 2%;
-    height: 6%;
-    margin: 3%;
-    border-radius: 50%;
-    background: url('./img/bomb.png') no-repeat fixed center center / cover;
+    background-image: url('./imgs/gmJ+GH.png');
+    background-size: cover;
+    /* will-change: transform; */
+
 }
 
-.invaders {
-    width: fit-content;
-    width: 400px;
-    /* display: flex;
-    flex-wrap: wrap; */
-    justify-content: center;
+.invader-bullet {
+    width: 5px;
+    height: 15px;
+    /* border: var(--col3) dotted; */
+    /* border-width: 0 4px; */
+    background-color: var(--col3);
+    position: absolute;
+    /* will-change: transform; */
+
 }
 
-.invader_Pink,
-.invader_Blue,
-.invader_White {
-    width: 45px;
-    height: 32px;
-    margin: 5px;
-    /* width: 8%;
-    height: 4%;
-    margin: 0%; */
-    display: inline-block;
-    animation: switchInvader 1s 0s infinite;
+.enemy {
+    width: 60px;
+    height: 59px;
+    border-radius: 5px;
+    position: absolute;
+    animation: alterBg 1s 0s infinite;
+    /* background-color: red; */
+    /* will-change: transform; */
+
 }
 
-@keyframes switchInvader {
+
+@keyframes alterBg {
     0% {
-        background: var(--_1stImg) no-repeat center / cover;
+        background: url('./imgs/vecteezy.webp') no-repeat center / cover;
     }
 
     100% {
-        background: var(--_2ndImg) no-repeat center / cover;
+        background: url('./imgs/vecteezy1.webp') no-repeat center / cover;
     }
 }
 
-.game-info {
-    font-size: 100%;
-    margin-bottom: 0.4%;
-    width: 610px;
-    height: 5%;
-    background-color: #e6e6e6;
-    border-radius: 5px 5px 0 0;
+/* ///////////optionsssssss */
+.options {
+    width: 500px;
+    margin: 20px;
+    padding: 10px;
     display: flex;
-    justify-content: space-between;
+    color: var(--col1);
+    font-size: 1.3rem;
+    user-select: none;
+    filter: blur(4px);
+    border-radius: 10px;
     align-items: center;
-    padding: 0% 1.3%;
-    color: var(--dark_);
     box-sizing: border-box;
+    justify-content: space-around;
+    box-shadow: 0 0 15px 0px #ac7063;
+    background-color: rgba(196, 60, 200, 0.2);
+    font-family: "Jersey 20", sans-serif;
 }
 
-.score img {
-    vertical-align: middle;
-    width: 29px;
-    height: auto;
-}
-
-.settings {
-    z-index: 1000;
-    position: relative;
-}
-
-.settings i {
-    cursor: pointer;
-    font-size: 24px;
-    color: black;
-    cursor: pointer;
-}
-
-.bomb {
-    position: absolute;
-    width: 5%;
-    height: 2%;
-    /* top: 10px; */
-    background: url('./img/bomb0.png') no-repeat;
-    margin: 21px;
-    /* border-radius: 50%; */
-}
-
-.lives-container {
-    width: 26%;
-    height: 26%;
-    background-color: #5b5b5b;
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-.lives {
-    height: 100%;
-    background-color: red;
-    text-align: center;
-    line-height: 148%;
-    color: rgb(255, 255, 255);
-    font-size: 51%;
-    border-radius: 15px;
-    transition: width 0.5s ease;
-}
-
-.popup,
-.container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.425);
+.options p {
+    margin: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+}
+
+.options-lives svg {
+    transform: scale(1);
+    color: var(--col3);
+}
+
+.options-lives svg:last-child,
+.heartbeat {
+    animation-name: scale;
+    animation-delay: 1s;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    margin-left: 5px;
+    animation-play-state: paused;
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(0.95);
+    }
+
+    30% {
+        transform: scale(1.1);
+        color: #e78195;
+        opacity: 0.2;
+    }
+
+    60% {
+        transform: scale(1.1);
+        color: #e78195;
+    }
+
+    100% {
+        transform: scale(0.95);
+        opacity: 1;
+    }
+}
+
+/* /////////////popups */
+
+.popup {
     z-index: 2;
-}
-
-.popup-content {
-    background: #3e3e3ec7;
-    padding: 1%;
-    border-radius: 2%;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.72);
-    max-width: 200px;
-    width: 19%;
-}
-
-.popup-title {
-    font-size: 1px;
-    color: var(--green);
-    margin-bottom: 0%;
-}
-
-.popup-mssg {
-    font-size: 100%;
-    color: #fff;
-    margin: 4%;
-}
-
-.popup-mssg img {
-    vertical-align: middle;
-    width: 25px;
-    /* height: auto; */
-}
-
-.all_btns {
-    display: flex;
-    justify-content: center;
-    gap: 20%;
-}
-
-.popup-button {
-    font-family: "Galindo", serif;
-    font-weight: bolder;
-    font-size: 100%;
-    background-color: var(--green);
-    color: var(--dark_);
-    border: none;
-    padding: 2% 6%;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.popup-button:hover {
-    background-color: var(--dark_);
-    color: var(--green);
-}
-
-.instruction {
-    font-family: monospace;
+    width: 350px;
     display: none;
-    background: #84849c;
-    width: 80%;
-    max-width: 500px;
-    height: auto;
-    max-height: 80vh;
-    margin: auto;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 20px;
+    font-weight: 700;
+    user-select: none;
+    color: var(--col1);
     position: absolute;
-    z-index: 3;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-y: auto;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-radius: 14px 0; 
+    text-transform: uppercase;
+    border: 2px solid var(--col1);
+    box-shadow: var(--pop-shadow);
+    font-family: "Jersey 20", sans-serif; 
 }
 
-.instruction li {
-    font-size: 10px;
+.popup h1,
+.popup p {
+    margin: 0;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    text-shadow: 0 3px 0px red, 0 -3px 0px aqua;
 }
 
-.instruction h2 {
-    font-size: 16px;
+.popup button {
+    width: 90%;
+    padding: 10px;
+    cursor: pointer;
+    margin: 27px 0 0;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--col1);
+    border-radius: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 2px solid var(--col2);
+    background: rgba(71, 60, 200, 0.2);
+    text-shadow: 0 2px 0px red, 0 -2px 0px aqua;
+    box-shadow: 0 0 7px #d10f36 inset, 0 0 7px 2px var(--col1);
 }
 
-.show {
+/* .popup button:hover {
+    transform: translate(5px, 5px);
+    text-shadow: 0 2px 0px aqua, 0 -2px 0px red;
+} */
+
+.start-popup {
     display: block;
 }
 
-.instruction>div:nth-of-type(1) {
-    height: 64px;
+.start-popup h1 {
+    margin: 0;
+}
+
+.playing .start-popup,
+.playing .pause-popup {
+    display: none;
+}
+
+.playing .canvas,
+.playing .options {
+    filter: none;
+}
+
+/* ///paused */
+
+.paused .pause-popup {
+    display: block;
+}
+
+.pause-popup .btns {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 30px;
 }
 
-.instruction button {
-    position: absolute;
-    right: 12px;
-    top: 12px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-@media screen and (max-width:650px) {
-    .canvas {
-        width: 450px;
-    }
-
-    .game-info {
-        width: 400px;
-    }
-
-    .all_btns {
-        flex-direction: column;
-    }
-
-    .all_btns button {
-        margin: 5px 0;
-    }
-}
-
-@media screen and (max-width:460px) {
-    .canvas {
-        width: 350px;
-    }
-
-    .game-info {
-        width: 300px;
-    }
-
-    .popup-title img {
-        width: 20px;
-    }
+.paused .canvas,
+.paused .options {
+    filter: blur(4px);
 }
 
 
-key {
-    background-color: #f7f7f7;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
-    padding: 2px 5px;
-    font-family: monospace;
-    font-size: 0.9em;
-    color: #333;
+/* ///over */
+
+.over .restart-popup {
+    display: block;
 }
 
-.blur {
-    filter: blur(2px);
-    transition: filter 0.3s ease;
+.over .restart-popup h1:nth-child(1) {
+    color: crimson;
 }
 
-li {
-    margin-top: 10px;
+.over .canvas,
+.over .options {
+    filter: blur(4px);
+}
+
+.win .game-win-popup {
+    display: block;
+}
+
+.win .canvas,
+.win .options {
+    filter: blur(4px);
+}
+
+.fps {
+    display: inline-block;
+    width: 25px;
+}
+@media screen and (max-width:580px) {
+
+    .canvas,
+    .options {
+        width: 420px;
+    }
+
+    .popup {
+        width: 220px;
+    }
+}
+
+@media screen and (max-width:380px) {
+
+    .canvas,
+    .options {
+        width: 280px;
+    }
+
+    .popup {
+        width: 180px;
+    }
 }

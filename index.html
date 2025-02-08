@@ -5,54 +5,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css" />
-    <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
-    <title>space-invaders</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="./imgs/favicon.ico">
+    <title>Space-Invaders</title>
 </head>
 
 <body>
-    <!-- <button class="pause">pause</button> -->
-    <div class="game-info">
-        <span class="score"><img src="./img/score.png" alt="score-img"> 0</span>
-        <span class="timer"></span>
-        <!-- <span class="lives">Lives: </span> -->
-        <div class="lives-container">
-            <div class="lives" style="width: 100%"></div>
+    
+    <div class="game-win-popup popup">
+        <h1>You win</h1>
+        <h1>Score : <span>0</span></h1>
+
+        <button tabindex="2">play again</button>
+    </div>
+    <div class="start-popup popup">
+        <h1># Space invader #</h1>
+        <button tabindex="2">Start</button>
+    </div>
+    <div class="restart-popup popup">
+        <h1>GAME OVER</h1>
+        <h1>score : <span>0</span> </h1>
+        <p></p>
+        <button tabindex="2">restart</button>
+
+    </div>
+    <div class="pause-popup popup">
+        <h1>paused </h1>
+        <p>
+            <span></span>
+        </p>
+        <div class="btns">
+            <button>restart</button>
+            <button>REsume</button>
         </div>
-        <span class="settings"><i class="fas fa-cog"></i></span>
+    </div>
+    <div class="options">
+        <div>
+            FPS:
+            <span class="fps">
+            </span>
+        </div>
+        <div class="count-down">
+            <span>01:10</span>
+        </div>
+        <div class="options-score">
+            <p>Score : <span>0</span></p>
+        </div>
+        <div class="options-lives">
+            <p>LIVES : &nbsp;&nbsp;
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path
+                        d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                </svg>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path
+                        d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                </svg>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path
+                        d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                </svg>
+
+            </p>
+        </div>
     </div>
     <div class="canvas">
         <div class="player"></div>
-        <div class="invaders"></div>
     </div>
-    <div class="instruction">
-        <button class="cancel-instruction">❌</button>
-        <div>
-            <img src="./img/alien0.png" alt="logo">
-        </div>
-        <div>
-            <h2>Objective:</h2>
-            <ul>
-                <li>Defeat all the invading aliens before they reach the bottom of the screen.</li>
-                <li>Score as many points as possible by shooting aliens and avoiding their attacks.</li>
-            </ul>
-
-            <h2>Lives:</h2>
-            <ul>
-                <li>You start with a set number of lives (usually 3).</li>
-                <li>Losing all lives ends the game.</li>
-            </ul>
-
-            <h2>Controls:</h2>
-            <ul>
-                <li><strong>Pause:</strong> Press <key>Esc</key> or <key>P</key>.</li>
-                <li><strong>Shoot Bomb:</strong> Press <key>Space</key> or <key>Enter</key>.</li>
-                <li><strong>Move Player:</strong> Press <key>&#11013</key> and <key>&#10145</key>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <script type="module" src="./script.js"></script>
+    <script src="./scripts/script.js"></script>
 </body>
-
 </html>
