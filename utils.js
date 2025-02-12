@@ -66,9 +66,22 @@ export const gameResult = () => {
         // canvas.innerHTML = ''
         let title = Total_invaders === 0 ? `<img src='./img/win.png'>` : `<img src='./img/defeat3.png'>`
         let moreInfo = `<img src="./img/score.png" alt="score-img" class="score-icon"> ${finalResult.scores}<br>${finalResult.finalTime}`
+        let history = Total_invaders === 0 ? 
+        `
+        Congratulations, Commander!
+            You've successfully defended Earth from the alien invasion. 
+            Humanity is safe...
+        ` 
+        :
+         `
+         The aliens have overwhelmed our defenses.  
+             Earth has fallen.  
+            But the fight is not over.  
+             Will you try again?
+         `
         creat_popup(title, moreInfo, [
-            { text: '<i class="fa-solid fa-rotate-right"></i>', action: () => location.reload() }
-        ])
+            { text: '<i class="fa-solid fa-rotate-right"></i> Play Again', action: () => location.reload() }
+        ], history)
     }
 }
 

@@ -1,7 +1,7 @@
-import { gameParams, shipParams, imagHTML } from "./settings.js"
+import { gameParams, shipParams, imagHTML, finalResult } from "./settings.js"
 const canvas = document.querySelector('.canvas')
 
-export const creat_popup = (title, mssg, btns) => {
+export const creat_popup = (title, mssg, btns, history) => {
     const last_popup = document.querySelector('.popup')
 
     if (last_popup !== null) {
@@ -12,6 +12,7 @@ export const creat_popup = (title, mssg, btns) => {
     const content_popup = document.createElement('div')
     const title_popup = document.createElement('h2')
     const mssg_popup = document.createElement('p')
+    const history_popup = document.createElement('p')
 
     popup.classList.add('popup')
     content_popup.classList.add('popup-content')
@@ -22,8 +23,12 @@ export const creat_popup = (title, mssg, btns) => {
     mssg_popup.innerHTML = mssg
     mssg_popup.classList.add('popup-mssg')
 
+    history_popup.innerHTML = history
+    history_popup.classList.add('popup-history')
+
     content_popup.append(title_popup)
     content_popup.append(mssg_popup)
+    content_popup.append(history_popup)
 
     if (btns.length !== 0) {
         const allBtns = document.createElement('div')
@@ -54,17 +59,25 @@ export const game_continue = () => {
 }
 
 export const middle = () => {
-    if (gameParams.current_min === 0 && gameParams.current_sec === 10) {
+    if (gameParams.current_min === 0 && finalResult.scores === 100) {
         canvas.classList.add('blur')
-        creat_popup('<i class="fa-solid fa-triangle-exclamation"  style="color: red"></i>', 'Less than 10 seconds remaining', [])
+        creat_popup('<i class="fa-solid fa-triangle-exclamation"  style="color: red"></i>', 
+            'Mission Update', [],
+        `
+         Great job!  
+        You've taken down a significant number of invaders.  
+        However, the mothership is sending reinforcements with a mysterious gift <span class="gift"><img src="./img/score.png" alt="score-img">+5</span>.  
+        Stay alert—the fight isn’t over yet!
+        `)
         gameParams.pauseGame = true
         setTimeout(() => {
             const pauseCard = document.querySelector('.popup')
             pauseCard.remove()
             gameParams.pauseGame = false
-            gameParams.current_sec += 2
+            // gameParams.current_sec += 2
+            finalResult.scores += 5
             canvas.classList.remove('blur')
-        }, 2000)
+        }, 8000)
     }
 }
 
@@ -76,7 +89,9 @@ export const display_pause = () => {
         [
             { text: '<i class="fa-solid fa-left-long"></i>', action: () => game_continue() },
             { text: '<i class="fa-solid fa-rotate-right"></i>', action: () => location.reload() }
-        ]
+        ],
+        `
+        `
     )
 }
 
@@ -98,6 +113,13 @@ export const handle_start = () => {
 }
 export const init = () => {
     creat_popup(imagHTML, '', [
-        { text: '<i class="fa-regular fa-circle-play" ></i> play', action: () => handle_start() }
-    ])
+        { text: '<i class="fa-regular fa-circle-play" ></i> Start Mission', action: () => handle_start() }
+    ], 
+    `The Earth is under attack by alien invaders! 👾 
+             You're the last hope for humanity, and the fate of the planet lies in your hands!💥  
+             As the ultimate defender, your mission is clear:  
+             -> blast those invaders out of the sky before they reach our cities! 👽  
+             It's time to save the world —
+              are you ready to fight? 
+    `)
 }

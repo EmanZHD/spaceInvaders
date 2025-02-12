@@ -117,12 +117,17 @@ body {
     box-sizing: border-box;
 }
 
-.score img {
+.score img, .gift img {
     vertical-align: middle;
     width: 29px;
     height: auto;
 }
-
+.gift img{
+    width: 20px;
+}
+.gift{
+    color: tomato;
+}
 .settings {
     z-index: 1000;
     position: relative;
@@ -189,17 +194,19 @@ body {
 }
 
 .popup-title {
-    font-size: 1px;
+    /* font-size: 1px; */
+    font-size: 1.5rem;
     color: var(--green);
     margin-bottom: 0%;
 }
 
-.popup-mssg {
+.popup-mssg, .popup-history {
+    font-family: monospace;
     font-size: 100%;
     color: #fff;
-    margin: 4%;
+    margin-bottom: 6%;
+    /* white-space: pre-line; */
 }
-
 .popup-mssg img {
     vertical-align: middle;
     width: 25px;
