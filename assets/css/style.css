@@ -7,18 +7,19 @@
 }
 
 .invader_Pink {
-    --_1stImg: url('./img/pinkAlien0.png');
-    --_2ndImg: url('./img/pinkAlien1.png');
+    /* ./img/pinkAlien0.png */
+    --_1stImg: url('../img/pinkAlien0.png');
+    --_2ndImg: url('../img/pinkAlien1.png');
 }
 
 .invader_Blue {
-    --_1stImg: url('./img/blueAlien0.png');
-    --_2ndImg: url('./img/blueAlien1.png');
+    --_1stImg: url('../img/blueAlien0.png');
+    --_2ndImg: url('../img/blueAlien1.png');
 }
 
 .invader_White {
-    --_1stImg: url('./img/alien0.png');
-    --_2ndImg: url('./img/alien1.png');
+    --_1stImg: url('../img/alien0.png');
+    --_2ndImg: url('../img/alien1.png');
 }
 
 body {
@@ -42,7 +43,7 @@ body {
     /* width: 33%; */
     width: 620px;
     height: 70%;
-    background: url(./img/M8Go.gif);
+    background: url(../img/M8Go.gif);
     border-radius: 1%;
     overflow: hidden;
 }
@@ -53,7 +54,7 @@ body {
     height: 100px;
     /* background-color: yellow; */
     /* top: 84%; */
-    background: url('./img/space_shipPk.png') no-repeat;
+    background: url('../img/space_shipPk.png') no-repeat;
     background-size: auto;
     background-size: cover;
 }
@@ -68,7 +69,7 @@ body {
     height: 6%;
     margin: 3%;
     border-radius: 50%;
-    background: url('./img/bomb.png') no-repeat fixed center center / cover;
+    background: url('../img/bomb.png') no-repeat fixed center center / cover;
 }
 
 .invaders {
@@ -117,17 +118,21 @@ body {
     box-sizing: border-box;
 }
 
-.score img, .gift img {
+.score img,
+.gift img {
     vertical-align: middle;
     width: 29px;
     height: auto;
 }
-.gift img{
+
+.gift img {
     width: 20px;
 }
-.gift{
+
+.gift {
     color: tomato;
 }
+
 .settings {
     z-index: 1000;
     position: relative;
@@ -145,7 +150,7 @@ body {
     width: 5%;
     height: 2%;
     /* top: 10px; */
-    background: url('./img/bomb0.png') no-repeat;
+    background: url('../img/bomb0.png') no-repeat;
     margin: 21px;
     /* border-radius: 50%; */
 }
@@ -200,13 +205,15 @@ body {
     margin-bottom: 0%;
 }
 
-.popup-mssg, .popup-history {
+.popup-mssg,
+.popup-history {
     font-family: monospace;
     font-size: 100%;
     color: #fff;
     margin-bottom: 6%;
     /* white-space: pre-line; */
 }
+
 .popup-mssg img {
     vertical-align: middle;
     width: 25px;

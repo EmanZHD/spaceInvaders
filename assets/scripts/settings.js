@@ -33,8 +33,8 @@ export const gameParams = {
 }
 
 export const imageSrc = [
-    './img/blueAlien0.png',
-    './img/alien1.png',
-    './img/pinkAlien0.png'
+    './assets/img/blueAlien0.png',
+    './assets/img/alien1.png',
+    './assets/img/pinkAlien0.png'
 ]
 export const imagHTML = imageSrc.map(src => `<img src="${src}" alt="logo">`).join('')

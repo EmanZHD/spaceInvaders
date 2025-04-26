@@ -1,8 +1,8 @@
-import { finalResult, gameParams,shipParams } from "./settings.js"
+import { finalResult, gameParams, shipParams } from "./settings.js"
 import { creat_popup } from "./popup.js"
 
 const time = document.querySelector('.timer')
-time.innerHTML = `00:30` 
+time.innerHTML = `00:30`
 
 export function getPlayerXRelativeToCanvas(player, canvas) {
     const playerRect = player.getBoundingClientRect()
@@ -23,22 +23,22 @@ export const collision_invaderBomb = (bullet, invader) => {
     return !(collision)
 }
 export const collision_shipBomb = (bomb, player) => {
-        const bombRect = bomb.getBoundingClientRect()
-        const playerRect = player.getBoundingClientRect()
-        return !(
-            bombRect.bottom < playerRect.top ||
-            bombRect.top > playerRect.bottom ||
-            bombRect.right < playerRect.left ||
-            bombRect.left > playerRect.right
-        )
-    }
+    const bombRect = bomb.getBoundingClientRect()
+    const playerRect = player.getBoundingClientRect()
+    return !(
+        bombRect.bottom < playerRect.top ||
+        bombRect.top > playerRect.bottom ||
+        bombRect.right < playerRect.left ||
+        bombRect.left > playerRect.right
+    )
+}
 
 export const increase_score = () => {
     const gameInfo = document.querySelector('.game-info')
     const scoreElement = gameInfo.querySelector('.score')
     if (scoreElement) {
-        scoreElement.innerHTML = `<img src="./img/score.png" alt="score-img" class="score-icon"> ${finalResult.scores}`
-       }
+        scoreElement.innerHTML = `<img src="./assets/img/score.png" alt="score-img" class="score-icon"> ${finalResult.scores}`
+    }
 }
 
 export const decrease_lives = (livesValue) => {
@@ -64,21 +64,12 @@ export const gameResult = () => {
     if (!finalResult.status || Total_invaders === 0) {
         gameParams.pauseGame = true
         // canvas.innerHTML = ''
-        let title = Total_invaders === 0 ? `<img src='./img/win.png'>` : `<img src='./img/defeat3.png'>`
-        let moreInfo = `<img src="./img/score.png" alt="score-img" class="score-icon"> ${finalResult.scores}<br>${finalResult.finalTime}`
-        let history = Total_invaders === 0 ? 
-        `
-        Congratulations, Commander!
-            You've successfully defended Earth from the alien invasion. 
-            Humanity is safe...
-        ` 
-        :
-         `
-         The aliens have overwhelmed our defenses.  
-             Earth has fallen.  
-            But the fight is not over.  
-             Will you try again?
-         `
+        let title = Total_invaders === 0 ? `<img src='./assets/img/win.png'>` : `<img src='./assets/img/defeat3.png'>`
+        let moreInfo = `<img src="./assets/img/score.png" alt="score-img" class="score-icon"> ${finalResult.scores}`
+        let history = Total_invaders === 0 ?
+            `${finalResult.finalTime}`
+            :
+            `Will you try again?`
         creat_popup(title, moreInfo, [
             { text: '<i class="fa-solid fa-rotate-right"></i> Play Again', action: () => location.reload() }
         ], history)

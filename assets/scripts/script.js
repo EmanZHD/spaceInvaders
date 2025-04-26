@@ -82,6 +82,8 @@ cancelInstruction.onclick = () => {
 setInterval(timer, 1000)
 
 const gameLoop = () => {
+    console.log('==========');
+
     if (gameParams.start === 0) {
         gameParams.pauseGame = true
         shipParams.canShoot = false
@@ -101,5 +103,6 @@ const gameLoop = () => {
 create_invaders()
 decrease_lives(gameParams.progress)
 danger_invaders()
+console.log('=======----===');
 
 requestAnimationFrame(gameLoop)

@@ -61,13 +61,11 @@ export const game_continue = () => {
 export const middle = () => {
     if (gameParams.current_min === 0 && finalResult.scores === 100) {
         canvas.classList.add('blur')
-        creat_popup('<i class="fa-solid fa-triangle-exclamation"  style="color: red"></i>', 
+        creat_popup('<i class="fa-solid fa-triangle-exclamation"  style="color: red"></i>',
             'Mission Update', [],
-        `
-         Great job!  
-        You've taken down a significant number of invaders.  
-        However, the mothership is sending reinforcements with a mysterious gift <span class="gift"><img src="./img/score.png" alt="score-img">+5</span>.  
-        Stay alert—the fight isn’t over yet!
+            `
+        Reinforces incoming with <span class="gift"><img src="./assets/img/score.png" alt="score-img">+5</span>.<br>
+        Stay sharp!
         `)
         gameParams.pauseGame = true
         setTimeout(() => {
@@ -114,12 +112,8 @@ export const handle_start = () => {
 export const init = () => {
     creat_popup(imagHTML, '', [
         { text: '<i class="fa-regular fa-circle-play" ></i> Start Mission', action: () => handle_start() }
-    ], 
-    `The Earth is under attack by alien invaders! 👾 
-             You're the last hope for humanity, and the fate of the planet lies in your hands!💥  
-             As the ultimate defender, your mission is clear:  
-             -> blast those invaders out of the sky before they reach our cities! 👽  
-             It's time to save the world —
-              are you ready to fight? 
+    ],
+        `It's time to save the world —<br>
+        are you ready to fight? 
     `)
 }
