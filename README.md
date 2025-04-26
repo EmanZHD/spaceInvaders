@@ -1,6 +1,6 @@
 # Space Invaders
 
-Recreation of the original 1978 Space Invaders arcade game.
+Recreation of the original 1978 Space Invaders arcade game.  
 Built with HTML, CSS and vanilla JavaScript.
 
 [▶ Play Now](https://emanzhd.github.io/spaceInvaders/)  |  [</> Source Code](https://github.com/EmanZHD/spaceInvaders)
