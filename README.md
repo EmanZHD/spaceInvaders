@@ -5,7 +5,11 @@ Built with HTML, CSS and vanilla JavaScript.
 
 [▶ Play Now](https://emanzhd.github.io/spaceInvaders/)  |  [</> Source Code](https://github.com/EmanZHD/spaceInvaders)
 
-![Game Preview](./assets/img/pic.png)
+<div align="center">
+    <a href="https://emanzhd.github.io/spaceInvaders/">
+        <img src="./assets/img/pic.png" height="" width="500px"/>
+    </a>
+</div>
 
 ---
 
